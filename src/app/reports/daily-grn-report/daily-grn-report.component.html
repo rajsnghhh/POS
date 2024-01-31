@@ -1,0 +1,592 @@
+<div class="page-header-main">
+    <div class="row align-items-center justify-content-between">
+        <div class="col-md-auto col-sm-auto col">
+            <div class="content-header">
+                <h1>Daywise Report </h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="row">
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label style="width: 100%;">Master Category</label>
+                    <select id="category" [(ngModel)]="master_category" class="form-control">
+                        <option value="" disabled>-- select --</option>
+                        <option *ngFor="let category of masterCategoryList" [value]="category.id">{{ category.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label style="width: 100%;">Summary Date </label>
+                    <input class="form-control" type="date" [(ngModel)]="summaryDate" placeholder="Summary Date">
+                    <!-- max={{TodaysDate}} -->
+                </div>
+            </div>
+
+            <div class="col-md-6 report-tool-bar">
+                <button type="button" class="btn btn-success btn-sm m-right-10 mt-1" (click)="searchFilter()">
+                    GO
+                </button>
+                <button type="button" class="btn btn-primary btn-sm m-right-10 mt-1" (click)="PrintBtnClick()">
+                    Print
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="registration" style="background-color: #fff;padding: 20px;">
+
+    <div style="text-align: center;font-size: 16px;padding: 4px;">
+        <b *ngIf="master_category== 'afc982ac-5e05-4633-99fb-08dbe76cdb9b'">NEEDS SHOP</b>
+        <b *ngIf="master_category== '06c71507-b6de-4d59-de84-08dbeb3c9568'">SOUTHERN STAR BAKERY</b>
+    </div>
+
+    <div style="text-align: center;">
+        <b>Summary Date : {{summaryDate | date:'dd-MM-YYYY'}}</b>
+    </div>
+
+    <div style="border: 2px solid black;padding: 3px;width: 97%;margin: auto;">
+        <label style="font-size: 22px;text-align: center; width: 100%;"><b>Sales Summary</b></label>
+        <table style="border: 2 px solid black;border-collapse:collapse !important;width: 100%;">
+            <tr>
+                <th style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;">Counter</th>
+                <th
+                    style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    Total Sale </th>
+                <th
+                    style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    Total Sale Return</th>
+                <th
+                    style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    Total Cancelled Bill Amount</th>
+                <th
+                    style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+            </tr>
+            <tr *ngFor="let saledata of saleDataSummary">
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;border: 2px solid black;padding: 0 !important;">
+                    {{saledata.counterName}}</td>
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                    {{saledata.totalAmount | customRound}}</td>
+                <!-- {{saledata.totalAmount | number : '1.2-2'}} -->
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                </td>
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                </td>
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                </td>
+            </tr>
+            <tr>
+                <th style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;">TOTAL</th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    {{totalSaleSummaryValue | number : '1.2-2'}}</th>
+                <!-- {{totalSaleSummaryValue | number : '1.2-2'}} -->
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    0.00</th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    0.00</th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+            </tr>
+            <tr></tr>
+            <tr *ngIf="master_category== 'afc982ac-5e05-4633-99fb-08dbe76cdb9b'">
+                <th style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;">DESCRIPTION
+                </th>
+                <th
+                    style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    SALES</th>
+                <th
+                    style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    PROFIT</th>
+                <th
+                    style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    WS VALUE</th>
+                <th
+                    style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+            </tr>
+            <tr *ngIf="master_category== 'afc982ac-5e05-4633-99fb-08dbe76cdb9b'">
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;border: 2px solid black;padding: 0 !important;">
+                    Veg/Fruit</td>
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                    {{vegTotalAmount | customRound}}</td><!-- {{vegTotalAmount | number : '1.2-2'}} -->
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                    {{vegTotalAmount - vegPurchaseTotalAmount | customRound}}</td>
+                <!--  {{vegTotalAmount - vegPurchaseTotalAmount | number : '1.2-2'}} -->
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                    {{vegPurchaseTotalAmount | customRound}}</td><!-- {{vegPurchaseTotalAmount | number : '1.2-2'}} -->
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                </td>
+            </tr>
+            <tr *ngIf="master_category== 'afc982ac-5e05-4633-99fb-08dbe76cdb9b'">
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;border: 2px solid black;padding: 0 !important;">
+                    Other Stock</td>
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                    {{otherTotalAmount | customRound}}</td><!--  {{otherTotalAmount | number : '1.2-2'}} -->
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                    {{otherTotalAmount - otherPurchaseTotalAmount |customRound}}</td>
+                <!--   {{otherTotalAmount - otherPurchaseTotalAmount | number : '1.2-2'}} -->
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                    {{otherPurchaseTotalAmount | customRound}}</td>
+                <!--   {{otherPurchaseTotalAmount | number : '1.2-2'}} -->
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                </td>
+            </tr>
+            <tr>
+                <th style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;">STOCK
+                    WASTAGE :-</th>
+            </tr>
+
+            <tr>
+                <th style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;">SUPPLIER
+                    NAME</th>
+                <th
+                    style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    AMOUNT</th>
+                <th
+                    style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    CHALLAN NO.</th>
+                <th
+                    style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+            </tr>
+            <tr *ngFor="let waste of wasteDataSummery">
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;border: 2px solid black;padding: 0 !important;">
+                    {{waste.supplierName}}</td>
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                    {{waste.totalAmount | customRound}}</td><!--  {{waste.totalAmount | number : '1.2-2'}} -->
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                </td>
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                </td>
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                </td>
+            </tr>
+            <tr>
+                <th style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;">TOTAL</th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    {{totalWasteSummaryValue | customRound}}</th><!-- {{totalWasteSummaryValue | number : '1.2-2'}} -->
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+            </tr>
+
+            <tr>
+                <th style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;">STOCK
+                    EXPIRED :-</th>
+            </tr>
+            <tr *ngFor="let expire of expireDataSummery">
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;border: 2px solid black;padding: 0 !important;">
+                    {{expire.supplierName}}</td>
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                    {{expire.totalAmount | customRound}}</td><!--  {{expire.totalAmount | number : '1.2-2'}} -->
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                </td>
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                </td>
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                </td>
+            </tr>
+            <tr>
+                <th style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;">TOTAL</th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    {{totalExpireSummaryValue | customRound}}</th>
+                <!--  {{totalExpireSummaryValue | number : '1.2-2'}} -->
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+            </tr>
+
+            <tr>
+                <th style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;">STOCK RETURN
+                    :-</th>
+            </tr>
+            <tr *ngFor="let returndata of returnDataSummery">
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;border: 2px solid black;padding: 0 !important;">
+                    {{returndata.supplierName}}</td>
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                    {{returndata.totalAmount | customRound}}</td><!-- {{returndata.totalAmount | number : '1.2-2'}} -->
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                </td>
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                </td>
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                </td>
+            </tr>
+            <tr>
+                <th style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;">TOTAL</th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    {{totalReturnSummaryValue | customRound}}</th>
+                <!-- {{totalReturnSummaryValue | number : '1.2-2'}} -->
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+            </tr>
+
+        </table>
+        <label style="font-size: 22px;text-align: center; width: 100%;"><b>Purchase Credit</b></label>
+        <table style="border: 1 px solid black;border-collapse:collapse !important;width: 100%;">
+            <tr>
+                <th style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;">DEALER</th>
+                <th
+                    style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    BILL NO</th>
+                <th
+                    style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    AMOUNT</th>
+                <th
+                    style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    PROFIT</th>
+                <th
+                    style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    WS VALUE</th>
+            </tr>
+            <tr *ngFor="let creditdata of creditPurchaseItems">
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;border: 2px solid black;padding: 0 !important;">
+                    {{creditdata.supplierName}}</td>
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                    {{creditdata.invoiceNo}}</td>
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                    {{creditdata.totalSaleAmount | customRound}}</td>
+                <!-- {{creditdata.totalSaleAmount | number : '1.2-2'}} -->
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                    {{creditdata.totalSaleAmount- creditdata.totalAmount | customRound}}</td>
+                <!--  {{creditdata.totalSaleAmount- creditdata.totalAmount | number : '1.2-2'}} -->
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                    {{creditdata.totalAmount | customRound}}</td><!-- {{creditdata.totalAmount | number : '1.2-2'}} -->
+            </tr>
+            <tr>
+                <th style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;">TOTAL</th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    {{totalCreditSalesAmount | customRound}}</th><!-- {{totalCreditSalesAmount | number : '1.2-2'}} -->
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    {{totalCreditSalesAmount - totalCreditPurchaseAmount | customRound}}</th>
+                <!--  {{totalCreditSalesAmount - totalCreditPurchaseAmount | number : '1.2-2'}} -->
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    {{totalCreditPurchaseAmount | customRound}}</th>
+                <!--  {{totalCreditPurchaseAmount | number : '1.2-2'}} -->
+            </tr>
+
+        </table>
+        <label style="font-size: 22px;text-align: center; width: 100%;"><b>Purchase Cash</b></label>
+        <table style="border: 1 px solid black;border-collapse:collapse !important;width: 100%;">
+            <tr>
+                <th style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;">DEALER</th>
+                <th
+                    style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    BILL NO</th>
+                <th
+                    style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    AMOUNT</th>
+                <th
+                    style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    PROFIT</th>
+                <th
+                    style="font-size: 16px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    WS VALUE</th>
+            </tr>
+            <tr *ngFor="let cashdata of cashPurchaseItems">
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;border: 2px solid black;padding: 0 !important;">
+                    {{cashdata.supplierName}}</td>
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                    {{cashdata.invoiceNo}}</td>
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                    {{cashdata.totalSaleAmount | customRound}}</td>
+                <!--  {{cashdata.totalSaleAmount | number : '1.2-2'}} -->
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                    {{cashdata.totalSaleAmount- cashdata.totalAmount | customRound}}</td>
+                <!--  {{cashdata.totalSaleAmount- cashdata.totalAmount | number : '1.2-2'}} -->
+                <td
+                    style="font-size: 13px;font-weight: 500;max-width: 8px;text-align: center;border: 2px solid black;padding: 0 !important;">
+                    {{cashdata.totalAmount | customRound}}</td><!-- {{cashdata.totalAmount | number : '1.2-2'}} -->
+            </tr>
+            <tr>
+                <th style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;">TOTAL</th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    {{totalCashSalesAmount | customRound}}</th><!--  {{totalCashSalesAmount | number : '1.2-2'}} -->
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    {{totalCashSalesAmount - totalCashPurchaseAmount |customRound}}</th>
+                <!-- {{totalCashSalesAmount - totalCashPurchaseAmount | number : '1.2-2'}} -->
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    {{totalCashPurchaseAmount | customRound}}</th>
+                <!--  {{totalCashPurchaseAmount | number : '1.2-2'}} -->
+            </tr>
+
+            <tr>
+                <th style="font-size: 14px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;"
+                    colspan="4">TOTAL GROCERY PURCHASE</th>
+                <th
+                    style="font-size: 14px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    0.00</th>
+
+            </tr>
+        </table>
+        <label style="font-size: 22px;text-align: center; width: 100%;"><b>Final Summary</b></label>
+        <table style="border: 1 px solid black;border-collapse:collapse !important;width: 100%;">
+            <tr>
+                <th style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;">TOTAL SALE
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    {{totalSaleSummaryValue | customRound}}</th> <!-- {{totalSaleSummaryValue | number : '1.2-2'}} -->
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+            </tr>
+            <tr>
+                <th style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;">SUBJI PAID
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    0.00</th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    SUBJI BALANCE</th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    0.00</th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+            </tr>
+            <tr>
+                <th style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;">LP</th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    {{totalCashPurchaseAmount |customRound}}</th>
+                <!-- {{totalCashPurchaseAmount | number : '1.2-2'}} -->
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+            </tr>
+            <tr>
+                <th style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;">MISC
+                    EXPENSES</th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    0.00</th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+            </tr>
+            <tr>
+                <th style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;">PAYTM &
+                    ONLINE PAYMENT</th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    {{PaytmAndOnlinePayment | customRound}}</th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+            </tr>
+            <tr>
+                <th style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;">CARD PAYMENT
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    {{creditCardTotalValue | customRound}}</th>
+                <!--  {{creditCardTotalValue | number : '1.2-2'}} -->
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+            </tr>
+            <tr>
+                <th style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;">CASH PAYMENT
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    {{cashTotalValue | customRound}} </th><!-- {{cashTotalValue | number : '1.2-2'}} -->
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+            </tr>
+            <tr>
+                <th style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;">DELIVERY
+                    AMOUNT</th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    {{deliveryTotalValue | customRound}}</th><!--  {{deliveryTotalValue | number : '1.2-2'}} -->
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+            </tr>
+            <tr>
+                <th style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;">CHEQUE/NEFT
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    {{chequeTotalValue | number : '1.2-2'}}</th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+            </tr>
+            <tr>
+                <th style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;">CASH IN HAND
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                    0.00</th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+                <th
+                    style="font-size: 13px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;">
+                </th>
+            </tr>
+            <tr>
+                <th style="font-size: 14px;max-width: 8px;border: 2px solid black;padding: 2px !important;text-align: center;"
+                    colspan="5">GROCERY BAL : 0.00</th>
+            </tr>
+        </table>
+    </div>
+
+    <div
+        style="display: flex;flex-wrap: wrap;width: 100%;margin-top: 20%;margin-left: 30px;font-size: 14px;font-weight: 700;">
+        <div style="display: flex;width: 15%;">NCO I/C</div>
+        <div style="display: flex;width: 25%;">NCO I/C GROCERY</div>
+        <div style="display: flex;width: 25%;">NCO I/C FROZEN</div>
+        <div style="display: flex;width: 20%;">NCO I/C VEG</div>
+        <div style="display: flex;width: 15%;">JCO I/C</div>
+    </div>
+
+</div>

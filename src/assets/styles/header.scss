@@ -1,0 +1,52 @@
+.main-footer {
+    margin-left: 0 !important;
+    padding: 5px 10px;
+    font-size: 13px;
+    position: absolute;
+    width: calc(100% - 250px);
+    bottom: 0;
+    margin-left: -15px !important;
+}
+
+@media (min-width: 150px) and (max-width: 600px) {
+    .main-footer {
+        display: none;
+    }
+}
+
+.mat-checkbox-inner-container {
+    margin-right: 8px !important;
+}
+.content-area-pos {
+  margin-left: 0px !important;
+  width: 100% !important;
+  margin-top: 25px;
+
+  .table-responsive {
+    height: calc(100vh - 370px);
+    overflow: auto;
+  }
+  .card-scroller {
+    max-height: calc(100vh - 350px);
+    overflow: auto;
+  }
+}
+
+.card-pos {
+    .card-body {
+        padding: 5px;
+        img {
+            width: 75%;
+            height: 35px;
+            margin: 0px 0px 0px 6px;
+            object-fit: contain;
+            object-position: center;
+        }
+    }
+    .card-text {
+        padding-top: 8px;
+        text-transform: capitalize;
+    }
+    cursor: pointer;
+    margin-bottom: 10px;
+}

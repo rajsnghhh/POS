@@ -1,0 +1,77 @@
+<div class="modal-content1">
+    <div class="modal-header">
+        <div class="d-flex w-100 align-items-center justify-content-between">
+            <div class="col-md-9 col">
+                <h4 class="modal-title">
+                    Manage Reward
+                </h4>
+            </div>
+            <div class="col-sm-auto col-auto ml-auto">
+                <button type="button" class="close" (click)="onCancel()" data-dismiss="modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="rewardForm">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="fromAmount" class="text-danger">From Amount *</label>
+                        <input formControlName="fromAmount" type="text" class="form-control" id="fromAmount">
+                        <div *ngIf="rewardForm.get('fromAmount').touched && rewardForm.get('fromAmount').errors">
+                            <div class="text-danger"
+                                *ngIf="rewardForm.get('fromAmount').touched && rewardForm.get('fromAmount').errors?.required">
+                                From Amount is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="toAmount" class="text-danger">To Amount *</label>
+                        <input formControlName="toAmount" type="text" class="form-control" id="toAmount">
+                        <div *ngIf="rewardForm.get('toAmount').touched && rewardForm.get('toAmount').errors">
+                            <div class="text-danger"
+                                *ngIf="rewardForm.get('toAmount').touched && rewardForm.get('toAmount').errors?.required">
+                               To Amount is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="rewardPoint" class="text-danger">Reward Point *</label>
+                        <input formControlName="rewardPoint" type="text" class="form-control" id="rewardPoint">
+                        <div *ngIf="rewardForm.get('rewardPoint').touched && rewardForm.get('rewardPoint').errors">
+                            <div class="text-danger"
+                                *ngIf="rewardForm.get('rewardPoint').touched && rewardForm.get('rewardPoint').errors?.required">
+                              Reward point is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="form-row w-100">
+                <div class="col-md-auto col-auto">
+                    <button class="btn btn-success btn-sm m-right-10"
+                        (click)="saveReward()" cdkFocusInitial>
+                        <i class="fas fa-save"></i>
+                        {{"SAVE" | translate}}
+                    </button>
+                    <button class="btn btn-danger btn-sm" (click)="onCancel()">
+                        <i class="fas fa-times-circle"></i>
+                        {{"CANCEL" | translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

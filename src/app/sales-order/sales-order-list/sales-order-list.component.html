@@ -1,0 +1,681 @@
+<div class="page-header-main">
+  <div class="row align-items-center justify-content-between">
+    <div class="col-md-auto col-sm-auto">
+      <div class="content-header">
+        <h1>{{"SALES_ORDER" | translate}}</h1>
+      </div>
+    </div>
+    <div class="col-md-auto col-sm-auto">
+
+
+      <button class="btn blue-btn btn-sm m-right-10" (click)="onDownloadSO()">
+        <i class="fas fa-download"></i> Download SO List
+      </button>
+
+
+      <button type="button" class="btn btn-success btn-sm m-right-10 "
+        *hasClaim="['SO_ADD_SO','SO_UPDATE_SO','SO_RETURN_SO','POS_POS']" data-toggle="modal"
+        data-target="#counterModal">Counter Wise Sales Order</button>
+
+      <!-- <button type="button" class="btn btn-success btn-sm m-right-10 "
+        *hasClaim="['SO_ADD_SO','SO_UPDATE_SO','SO_RETURN_SO','POS_POS']" data-toggle="modal"
+        data-target="#exampleModal" (click)="getAllSalesOrder()">
+        <i class="fas fa-save"></i>All Sales Order</button> -->
+
+      <button class="btn blue-btn btn-sm m-right-10" *hasClaim="'SO_ADD_SO'" [routerLink]="['/sales-order/add']">
+        <i class="fas fa-plus"></i> {{"ADD_SALES_ORDER" | translate}}
+      </button>
+    </div>
+  </div>
+</div>
+<div class="loading-shade" *ngIf="dataSource.loading$ | async">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="table-responsive">
+      <table [dir]="langDir" mat-table [dataSource]="dataSource" multiTemplateDataRows
+        class="table table-bordered table-hover grid-height" matSort matSortActive="soCreatedDate">
+        <ng-container matColumnDef="action">
+          <th class="table-column-150" mat-header-cell *matHeaderCellDef>
+          </th>
+          <td class="table-column-150" mat-cell *matCellDef="let so">
+            <button mat-icon-button (click)="toggleRow(so)">
+              <mat-icon *ngIf="so != expandedElement">chevron_right</mat-icon>
+              <mat-icon *ngIf="so == expandedElement">expand_more</mat-icon>
+            </button>
+            <button class="ml-4"
+              *hasClaim="['SO_UPDATE_SO','SO_VIEW_SO_DETAIL','SO_DELETE_SO','SO_RETURN_SO','SO_ADD_SO_PAYMENT','SO_VIEW_SO_PAYMENTS','SO_GENERATE_INVOICE']"
+              mat-icon-button [matMenuTriggerFor]="menu" aria-label="Action">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" [dir]="langDir">
+              <ng-container *ngIf="so.status == 0">
+                <button *hasClaim="'SO_UPDATE_SO'" mat-menu-item [routerLink]="['/sales-order/', so.id]">
+                  <mat-icon>edit</mat-icon>
+                  <span>{{'EDIT' | translate}}</span>
+                </button>
+              </ng-container>
+              <button *hasClaim="'SO_VIEW_SO_DETAIL'" mat-menu-item [routerLink]="['/sales-order/detail', so.id]">
+                <mat-icon>info</mat-icon>
+                <span>{{'DETAIL' | translate}}</span>
+              </button>
+              <ng-container *ngIf="so.status == 0">
+                <button *hasClaim="'SO_DELETE_SO'" mat-menu-item data-toggle="modal" data-target="#cancelModal"
+                  (click)="deleteSalesOrder(so)">
+                  <mat-icon>cancel</mat-icon>
+                  <span>Cancel</span>
+                </button>
+              </ng-container>
+              <ng-container *ngIf="so.status == 0">
+                <button *hasClaim="'SO_RETURN_SO'" mat-menu-item (click)="onSaleOrderReturn(so)">
+                  <mat-icon>assignment_return</mat-icon>
+                  <span>{{"RETURN_SALES_ORDER" | translate}}</span>
+                </button>
+              </ng-container>
+              <ng-contaner *ngIf="so.paymentStatus != 0">
+                <button *hasClaim="'SO_ADD_SO_PAYMENT'" mat-menu-item (click)="addPayment(so)">
+                  <mat-icon>payment</mat-icon>
+                  <span>{{"ADD_PAYMENT" | translate}}</span>
+                </button>
+              </ng-contaner>
+              <ng-contaner>
+                <button mat-menu-item (click)="addDeliveryPerson(so)">
+                  <mat-icon>person</mat-icon>
+                  <span>Assign Delivery Person</span>
+                </button>
+              </ng-contaner>
+              <ng-contaner>
+                <button mat-menu-item (click)="changeOrderStatus(so)">
+                  <mat-icon>local_shipping</mat-icon>
+                  <span>Order Status</span>
+                </button>
+              </ng-contaner>
+              <button *hasClaim="'SO_VIEW_SO_PAYMENTS'" mat-menu-item (click)="viewPayment(so)">
+                <mat-icon>view_carousel</mat-icon>
+                <span>{{"VIEW_PAYMENT" | translate}}</span>
+              </button>
+              <button *hasClaim="'SO_GENERATE_INVOICE'" mat-menu-item (click)="generateInvoice(so)">
+                <mat-icon>receipt</mat-icon>
+                <span>{{'GENERATE_INVOICE' | translate}}</span>
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+        <!-- <ng-container matColumnDef="appweb">
+          <th class="table-column-140" mat-header-cell *matHeaderCellDef mat-sort-header>Ordered From
+          </th>
+          <td class="table-column-140" mat-cell *matCellDef="let so">
+            <div *ngIf="so.isAppOrderRequest"> App </div>
+            <div *ngIf="!so.isAppOrderRequest">Counter</div>
+
+          </td>
+        </ng-container> -->
+        <ng-container matColumnDef="soCreatedDate">
+          <th class="table-column-100" mat-header-cell *matHeaderCellDef mat-sort-header> {{'ORDER_DATE' | translate}} & Time
+          </th>
+          <td class="table-column-100" mat-cell *matCellDef="let so">
+            <!-- {{timeConvertUTCtoIST(so.soCreatedDate) | date : 'MM/dd/YYYY' }} -->
+            {{ timeConvertUTCtoIST(so.soCreatedDate) | date: 'MM/dd/yyyy HH:mm:ss' }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="orderNumber">
+          <th class="table-column-150" mat-header-cell *matHeaderCellDef mat-sort-header> {{'ORDER_NUMBER' | translate}}
+          </th>
+          <td class="table-column-150" mat-cell *matCellDef="let so">
+            <a [routerLink]="['/sales-order/detail', so.id]">{{so.orderNumber}} </a>
+          </td>
+        </ng-container>
+
+
+
+        <ng-container matColumnDef="orderedFrom">
+          <th class="table-column-150" mat-header-cell *matHeaderCellDef mat-sort-header> Ordered From
+          </th>
+          <td class="table-column-150" mat-cell *matCellDef="let so">
+            {{so.counterName}}
+          </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="deliveryDate">
+          <th class="table-column-150" mat-header-cell *matHeaderCellDef mat-sort-header> {{'DELIVERY_DATE' |
+            translate}}
+          </th>
+          <td class="table-column-100" mat-cell *matCellDef="let so"> {{so.deliveryDate | utcToLocalTime:'shortDate'
+            }} </td>
+        </ng-container>
+        <ng-container matColumnDef="deliveryPerson">
+          <th class="table-column-150" mat-header-cell *matHeaderCellDef mat-sort-header> Delivery Person
+          </th>
+          <td class="table-column-150" mat-cell *matCellDef="let so"> {{so.assignDeliveryPerson}} </td>
+        </ng-container>
+        <ng-container matColumnDef="deliveryStatus">
+          <th class="table-column-200" mat-header-cell *matHeaderCellDef mat-sort-header> Delivery Status
+          </th>
+          <td class="table-column-200" mat-cell *matCellDef="let so"> {{so.orderDeliveryStatus}} </td>
+        </ng-container>
+        <ng-container matColumnDef="orderType">
+          <th class="table-column-160" mat-header-cell *matHeaderCellDef mat-sort-header>Order Type
+          </th>
+          <td class="table-column-160" mat-cell *matCellDef="let so">
+            <div *ngIf="so.isAdvanceOrderRequest">Advance</div>
+            <div *ngIf="!so.isAdvanceOrderRequest">Current</div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="customerName">
+          <th class="table-column-300" mat-header-cell mat-sort-header *matHeaderCellDef>{{'CUSTOMER_NAME' | translate}}
+          </th>
+          <td class="table-column-300" mat-cell *matCellDef="let so">
+            <a [routerLink]="['/customer',so.customerId]"> {{so.customerName}} </a>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="customerNo">
+          <th class="table-column-150" mat-header-cell *matHeaderCellDef mat-sort-header>Customer Phn </th>
+          <td class="table-column-150" mat-cell *matCellDef="let so">
+            {{so.mobileNo}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="totalDiscount">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'TOTAL_DISCOUNT' | translate}} </th>
+          <td mat-cell *matCellDef="let so">
+            {{so.totalDiscount | customCurrency}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="totalTax">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'TOTAL_TAX' | translate}} </th>
+          <td mat-cell *matCellDef="let so">
+            {{so.totalTax | customCurrency}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="totalAmount">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Order Amount</th>
+          <td mat-cell *matCellDef="let so">
+            {{so.totalAmount | customCurrency}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="totalPaidAmount">
+          <th class="table-column-200" mat-header-cell *matHeaderCellDef mat-sort-header> {{'TOTAL_PAID_AMOUNT' |
+            translate}} </th>
+          <td class="table-column-200" mat-cell *matCellDef="let so">
+            {{so.totalPaidAmount | customCurrency }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="paymentStatus">
+          <th class="table-column-150" mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAYMENT_STATUS' |
+            translate}} </th>
+          <td class="table-column-150" mat-cell *matCellDef="let so" style="text-align: center;">
+            <span class="badge-pill" [ngClass]="{'badge-success': so.paymentStatus ==  0,
+              'badge-danger' : so.paymentStatus == 1,
+              'badge-warning' : so.paymentStatus == 2}">{{so.paymentStatus | paymentStatus }}</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'IS_RETURN' | translate}} </th>
+          <td mat-cell *matCellDef="let so">
+            <ng-contaner *ngIf="so.status ==1">
+              {{'YES' | translate}}
+            </ng-contaner>
+            <ng-contaner *ngIf="so.status != 1">
+              {{'NO' | translate}}
+            </ng-contaner>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="action-search">
+          <th mat-header-cell *matHeaderCellDef> </th>
+        </ng-container>
+        <ng-container matColumnDef="appweb-search">
+          <th mat-header-cell *matHeaderCellDef>
+
+            <input placeholder="From" type="text" class="form-control w-90" [formControl]="orderFromControl"
+              [matAutocomplete]="autoCustomer">
+            <mat-autocomplete [dir]="langDir" [autoActiveFirstOption]="true"
+              (optionSelected)='OrderFromFilter=$event.option.value' #autoCustomer="matAutocomplete">
+              <mat-option value="">{{'NONE' | translate}}</mat-option>
+              <mat-option value="App">App</mat-option>
+              <mat-option value="Counter">Counter</mat-option>
+            </mat-autocomplete>
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="soCreatedDate-search">
+          <th mat-header-cell *matHeaderCellDef>
+            <input type="date" class="form-control w-90" [(ngModel)]="CreateDateFilter">
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="deliveryPerson-search">
+          <th mat-header-cell *matHeaderCellDef>
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="deliveryStatus-search">
+          <th mat-header-cell *matHeaderCellDef>
+            <input placeholder="Delivery Status" type="text" class="form-control w-90"
+              [formControl]="deliveryStatusFromControl" [matAutocomplete]="autoCustomer">
+            <mat-autocomplete [dir]="langDir" [autoActiveFirstOption]="true"
+              (optionSelected)='DeliveryStatusFilter=$event.option.value' #autoCustomer="matAutocomplete">
+              <mat-option value="">{{'NONE' | translate}}</mat-option>
+              <mat-option value="Order Placed">Order Placed</mat-option>
+              <mat-option value="Shipped">Shipped</mat-option>
+              <mat-option value="Out for Delivery">Out for Delivery</mat-option>
+              <mat-option value="Delivered">Delivered</mat-option>
+
+            </mat-autocomplete>
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="orderNumber-search">
+          <th mat-header-cell *matHeaderCellDef>
+            <input placeholder="{{'ORDER_NO' | translate}}" type="text" class="form-control w-90"
+              [(ngModel)]="OrderNumberFilter">
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="orderedFrom-search">
+          <th mat-header-cell *matHeaderCellDef>
+            <input placeholder="Ordered" type="text" class="form-control w-90" [(ngModel)]="CounterNameFilter">
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="deliverDate-search">
+          <th mat-header-cell *matHeaderCellDef>
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="orderType-search">
+          <th mat-header-cell *matHeaderCellDef>
+
+            <input placeholder="Order Type" type="text" class="form-control w-90" [formControl]="orderTypeControl"
+              [matAutocomplete]="autoCustomer">
+            <mat-autocomplete [dir]="langDir" [autoActiveFirstOption]="true"
+              (optionSelected)='OrderTypeFilter=$event.option.value' #autoCustomer="matAutocomplete">
+              <mat-option value="">{{'NONE' | translate}}</mat-option>
+              <mat-option value="Advance">Advance</mat-option>
+              <mat-option value="Current">Current</mat-option>
+            </mat-autocomplete>
+
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="customerName-search">
+          <th mat-header-cell *matHeaderCellDef>
+            <input placeholder="{{'CUSTOMER' | translate}}" type="text" class="form-control w-90"
+              [formControl]="customerNameControl" [matAutocomplete]="autoCustomer">
+            <mat-autocomplete [dir]="langDir" [autoActiveFirstOption]="true"
+              (optionSelected)='CustomerFilter=$event.option.value' #autoCustomer="matAutocomplete">
+              <mat-option value="">{{'NONE' | translate}}</mat-option>
+              <mat-option [dir]="langDir" *ngFor="let customer of customerList$ | async"
+                [value]="customer.customerName">
+                {{customer.customerName}}
+              </mat-option>
+            </mat-autocomplete>
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="customerNo-search">
+          <th mat-header-cell *matHeaderCellDef>
+            <input placeholder="Customer No" type="text" class="form-control w-90" [(ngModel)]="CustomerNumberFilter">
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="totalAmount-search">
+          <th mat-header-cell *matHeaderCellDef>
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="totalDiscount-search">
+          <th mat-header-cell *matHeaderCellDef>
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="totalTax-search">
+          <th mat-header-cell *matHeaderCellDef>
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="totalPaidAmount-search">
+          <th mat-header-cell *matHeaderCellDef>
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="paymentStatus-search">
+          <th mat-header-cell *matHeaderCellDef>
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="status-search">
+          <th mat-header-cell *matHeaderCellDef>
+          </th>
+        </ng-container>
+        <ng-container matColumnDef="footer">
+          <td mat-footer-cell colspan="17" *matFooterCellDef>
+            <mat-paginator [dir]="langDir" [length]="salesOrderResource.totalCount"
+              [pageSize]="salesOrderResource.pageSize" [pageSizeOptions]="[10, 20, 30]">
+            </mat-paginator>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let soObject" [attr.colspan]="displayedColumns.length">
+            <ng-container *ngIf="soObject == expandedElement">
+              <div class="example-element-detail"
+                [@detailExpand]="soObject == expandedElement ? 'expanded' : 'collapsed'">
+                <div class="inner-table mat-elevation-z8">
+                  <app-sales-order-items [salesOrder]="soObject">
+                  </app-sales-order-items>
+                </div>
+              </div>
+            </ng-container>
+          </td>
+        </ng-container>
+        <tr *matNoDataRow>
+          <td colspan="9">
+            <span class="p-4 mt-4">
+              <b> {{'NO_DATA_FOUND' | translate}}</b>
+            </span>
+          </td>
+        </tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.bg-warning1]="row.status===1"></tr>
+        <tr mat-header-row *matHeaderRowDef="filterColumns;sticky: true">
+
+        <tr mat-footer-row *matFooterRowDef="footerToDisplayed;sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+      </table>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="salesOrderForInvoice">
+  <app-sales-order-invoice [salesOrder]="salesOrderForInvoice"></app-sales-order-invoice>
+</ng-container>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Sales Order Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div id="invoice" #invoiceContent>
+          <h2 style="margin-right: 15px;
+          border: 1px solid black;
+          width: 92%;
+          text-align: center;
+          margin-left: -3px;">List Of Sales Order Details</h2>
+          <section style="width: 178%;overflow: hidden;display: block;margin: 7px 0px 0px -4px">
+
+            <table class="table_invoice"
+              style="margin-top:6px;width: 52%;margin-right:10px;zoom:0.9; box-sizing: border-box;  border-collapse: collapse !important;">
+              <tr>
+                <th style="border: 1px solid black; width: 0%;">Sr.<br>No</th>
+                <th style="border: 1px solid black; width: 0%;">Counter</th>
+                <th style="border: 1px solid black; width:6%">Date</th>
+                <th style="border: 1px solid black; width: 0%">Bill<br>ID</th>
+                <th style="border: 1px solid black; width: 0%;">Qty</th>
+                <th style="border: 1px solid black; width: 1%;max-width: 4%;text-align: left;">Payment</th>
+                <th style="border: 1px solid black; width: 0%;">Amt</th>
+                <!-- Add more fields as needed -->
+              </tr>
+              <!-- Sample data, replace with actual sales order data -->
+              <tr *ngFor="let item of allSalesOrderedDetails;index as i">
+                <td style="border: 1px solid black; width: 0%;"><strong>{{i+1}}</strong></td>
+                <td style="border: 1px solid black; width: 0%; word-wrap: break-word !important;">
+                  <strong>{{item.counterName}}</strong>
+                </td>
+                <td style="border: 1px solid black; width:6%;">
+                  <strong>{{item.soCreatedDate.substring(0,10).split('-').reverse().join('-')}}</strong>
+                </td>
+                <td style="border: 1px solid black; width: 0%"><strong>{{item.billId}}</strong></td>
+                <td style="border: 1px solid black; width: 0%"><strong>{{item.totalQuantity}}</strong>
+                </td>
+                <td style="border: 1px solid black; width: 1%;max-width: 4%;word-wrap: break-word !important;">
+                  <strong>{{item.paymentMethod}}</strong><!-- {{item.paymentMethod}} -->
+                </td>
+                <td style="border: 1px solid black; width: 0%"><strong>{{item.totalAmount}}</strong></td>
+              </tr>
+              <!-- Add more rows with sales order data -->
+              <tr>
+                <td colspan="4" style="border: 1px solid black; width: 1%;max-width: 1%;text-align: center; ">
+                  <strong>Total</strong>
+                </td>
+                <td style="border: 1px solid black; width: 1%;max-width: 1%;"><strong>{{totalQtySum}}</strong></td>
+
+                <td colspan="1" style="border: 1px solid black;"></td>
+                <td style="border: 1px solid black; width: 1%;max-width: 1%;">
+                  <strong>{{totalAmtSum.toFixed(2)}}</strong>
+                </td>
+
+              </tr>
+            </table>
+          </section>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button #closeButton type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="printInvoice()">Print</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="counterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style=" width: 200%;  margin-left: -197px;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Counter Wise Filter</h5>
+        <button type="button" class="close" (click)="closeButtonCounters()" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+
+        <form [formGroup]="counterForm" class="custom-form">
+          <div class="row">
+            <div class="col-md-2">
+              <label for="fromDate">From Date:</label>
+              <input type="date" id="fromDate" formControlName="fromDate" class="form-control">
+            </div>
+
+            <div class="col-md-2">
+              <label for="toDate">To Date:</label>
+              <input type="date" id="toDate" formControlName="toDate" class="form-control">
+            </div>
+
+            <div class="col-md-2">
+              <label for="category">Master Category:</label>
+              <select id="category" formControlName="master_category" class="form-control">
+                <option value="" disabled>-- select --</option>
+                <option *ngFor="let category of masterCategoryList" [value]="category.id">{{ category.name}} </option>
+              </select>
+            </div>
+
+            <div class="col-md-2">
+              <label for="counter">Counters:</label>
+              <select id="counter" formControlName="counter" class="form-control">
+                <option value="all">All</option>
+                <option *ngFor="let counter of counterList" [value]="counter.counterName">{{ counter.counterName }}
+                </option>
+              </select>
+            </div>
+
+            <div class="col-md-2" style="margin-top: 30px;"><!-- *ngIf="counterForm.value.counter == 'all'" -->
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                formControlName="appBilling" (change)="checkAppBill($event)">
+              <label class="form-check-label" for="flexCheckDefault">
+                App<br>Billing
+              </label>
+            </div>
+
+            <div class="col-md-2" style="margin-left: -75px; 
+            margin-top: 25px;"> <button class="btn btn-primary" (click)="showCounterList()">Go</button>
+            </div>
+
+            <!-- <div class="col-md-2" style="margin-left: 67px;
+            margin-top: 25px;" *ngIf="counterForm.value.counter != 'all'"> <button class="btn btn-primary"
+                (click)="showCounterList()">Go</button>
+            </div> -->
+
+            <!-- <div class="col-md-2" style="margin-left: -75px; 
+            margin-top: 25px;" *ngIf="counterForm.value.counter == 'all'"> <button class="btn btn-primary"
+                (click)="showCounterList()">Go</button>
+            </div> -->
+          </div>
+
+        </form><br>
+
+        <!-- <div id="invoice" #invoiceCounter>
+          <h6><u>List Of Sales Order Details</u></h6>
+
+          <table class="table custom-table">
+            <thead class="custom-thead">
+              <tr>
+                <th>Sr. No</th>
+                <th>Counter</th>
+                <th>Date</th>
+                <th>Bill ID</th>
+                <th>Quantity</th>
+                <th>Payment</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+
+            <tr *ngFor="let item of counterWiseSaleDetails;index as i">
+              <td>{{i+1}}</td>
+              <td>{{item.counterName}}</td>
+              <td>{{item.soCreatedDate.substring(0,10).split('-').reverse().join('-')}}</td>
+              <td>{{item.billId}}</td>
+              <td>{{item.totalQuantity}}</td>
+              <td>{{item.paymentMethod}}</td>
+              <td>{{item.totalAmount}}</td>
+            </tr>
+
+            <tr>
+              <td colspan="4" style="text-align: center;"><strong>Total</strong></td>
+              <td><strong>{{totalQtySumCounter}}</strong></td>
+
+              <td colspan="1"></td>
+              <td><strong>{{totalAmtSumCounter.toFixed(2)}}</strong></td>
+            </tr>
+
+          </table>
+        </div> -->
+
+        <div id="invoice" #invoiceCounter>
+          <h2 style="border: 1px solid black;width: 87%;
+          margin-left: 20px; text-align: center;">List Of Sales Order Details</h2>
+          <section style="width: 178%;overflow: hidden;display: block;margin: 7px 0px 0px -4px">
+
+            <table class="table_invoice"
+              style="margin-top:6px;width: 49%;    margin-left: 28px;margin-right:10px;zoom:0.9; box-sizing: border-box;  border-collapse: collapse !important;">
+              <tr>
+                <th style="border: 1px solid black; width: 0%;">Sr.<br>No</th>
+                <th style="border: 1px solid black; width: 0%;">Counter</th>
+                <th style="border: 1px solid black; width:8%">Date</th>
+                <th style="border: 1px solid black; width: 0%">Bill<br>ID</th>
+                <th style="border: 1px solid black; width: 0%;">Qty</th>
+                <th style="border: 1px solid black; width: 1%;max-width: 4%;text-align: left;">Payment</th>
+                <th style="border: 1px solid black; width: 0%;">Amt</th>
+                <!-- Add more fields as needed -->
+              </tr>
+              <!-- Sample data, replace with actual sales order data -->
+              <tr *ngFor="let item of counterWiseSaleDetails;index as i">
+                <td style="border: 1px solid black; width: 0%;"><strong>{{i+1}}</strong></td>
+                <td style="border: 1px solid black; width: 0%; word-wrap: break-word !important;">
+                  <strong>{{item.counterName}}</strong>
+                </td>
+                <td style="border: 1px solid black; width:8%;">
+                  <strong>{{item.soCreatedDate.substring(0,10).split('-').reverse().join('-')}}</strong>
+                </td>
+                <td style="border: 1px solid black; width: 0%"><strong>{{item.billId}}</strong></td>
+                <td style="border: 1px solid black; width: 0%"><strong>{{item.totalQuantity.toFixed(2)}}</strong>
+                </td>
+                <td style="border: 1px solid black; width: 1%;max-width: 4%;word-wrap: break-word !important;">
+                  <strong>{{item.paymentMethod}}</strong><!-- {{item.paymentMethod}} -->
+                </td>
+                <td style="border: 1px solid black; width: 0%"><strong>{{item.totalAmount | customRound}}</strong></td>
+              </tr>
+              <!-- Add more rows with sales order data -->
+              <tr>
+                <td colspan="4" style="border: 1px solid black; width: 1%;max-width: 1%;text-align: center; ">
+                  <strong>Total</strong>
+                </td>
+                <td style="border: 1px solid black; width: 1%;max-width: 1%;">
+                  <strong>{{totalQtySumCounter.toFixed(2)}}</strong>
+                </td>
+
+                <td colspan="1" style="border: 1px solid black;"></td>
+                <td style="border: 1px solid black; width: 1%;max-width: 1%;">
+                  <strong>{{totalAmtSumCounter.toFixed(2)}}</strong>
+                </td>
+
+              </tr>
+              <tr>
+                <td colspan="4" style="border: 1px solid black; width: 1%;max-width: 1%;text-align: center; ">
+                  <strong>Delivery Charges</strong>
+                </td>
+                <td style="border: 1px solid black; width: 1%;max-width: 1%;"></td>
+
+                <td colspan="1" style="border: 1px solid black;"></td>
+                <td style="border: 1px solid black; width: 1%;max-width: 1%;">
+                  <strong>{{deliveryTotalValue | customRound}}</strong>
+                </td>
+
+              </tr>
+              <tr>
+                <td colspan="4" style="border: 1px solid black; width: 1%;max-width: 1%;text-align: center; ">
+                  <strong>Final Amt</strong>
+                </td>
+                <td style="border: 1px solid black; width: 1%;max-width: 1%;"></td>
+
+                <td colspan="1" style="border: 1px solid black;"></td>
+                <td style="border: 1px solid black; width: 1%;max-width: 1%;">
+                  <strong>{{totalAmtSumCounter - deliveryTotalValue | customRound}}</strong>
+                </td>
+
+              </tr>
+            </table>
+          </section>
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button #closeButtonCounter type="button" class="btn btn-secondary" data-dismiss="modal"
+          (click)="closeButtonCounters()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="printCounterInvoice()">Print</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="width: 90%;margin: auto;">
+      <div class="modal-header text-danger">
+        <h6 class="modal-title" id="exampleModalLabel">Are you want to Cancel this Sales Order?</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body wholebody">
+        <div class="yesnobtn">
+          <input type="radio" id="Yes" [(ngModel)]="cancelStatus" value='Yes'>
+          <label for="Yes">Yes</label>
+          <input type="radio" data-dismiss="modal" id="No" [(ngModel)]="cancelStatus" value='No'>
+          <label for="No">No</label>
+        </div>
+      </div>
+      <div class="remarksfield" *ngIf="cancelStatus=='Yes'">
+        <input name="remarks" placeholder="Remarks" [(ngModel)]="remarksValue" class="form-control w-100" type="text">
+        <div class="text-danger" *ngIf="remarksValue==''">
+          Remarks is Required
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cancelSave()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>

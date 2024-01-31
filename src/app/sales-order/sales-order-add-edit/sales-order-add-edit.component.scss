@@ -1,0 +1,25 @@
+
+.suggestionbox {
+    min-height: auto;
+    max-height: 250px;
+    overflow-y: scroll;
+  }
+  
+  ::ng-deep {
+    .mat-select-panel {
+      overflow: none !important;
+      max-height: max-content !important;
+    }
+  
+    .mat-option-text {
+      font-size: 12px !important;
+      text-transform: uppercase !important;
+      font-weight: 400 !important;
+    }
+  
+    .mat-option {
+      line-height: normal !important;
+      height: auto !important;
+      padding: 6px 13px !important;
+    }
+  }

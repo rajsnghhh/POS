@@ -1,0 +1,531 @@
+<div class="second-header">
+    <div class="eachIcon navbar" [ngClass]="{'activetop': currentUrl == ''}"
+        *hasClaim="['DB_STATISTICS','DB_BEST_SELLING_PROS','DB_REMINDERS','DB_LATEST_INQUIRIES','DB_RECENT_SO_SHIPMENT','DB_RECENT_PO_DELIVERY']">
+        <div class="dropdown">
+            <button class="dropbtn" [routerLink]="['/']">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </button>
+            <div class="dropdown-content">
+                <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+                    class="nav-link">
+                    {{'DASHBOARD' | translate}}
+                </a>
+            </div>
+        </div>
+        <!-- <span>Dashboard</span> -->
+    </div>
+    <div class="eachIcon navbar" [ngClass]="{'activetop': currentUrl == 'product'}"
+        *hasClaim="['PRO_VIEW_PRODUCTS','PRO_ADD_PRODUCT','PRO_MANAGE_PRO_CAT','PRO_MANAGE_TAX','PRO_MANAGE_UNIT','PRO_MANAGE_BRAND','PRO_MANAGE_WAREHOUSE','PRO_MANAGE_MANUFACTURER']">
+        <div class="dropdown">
+            <button class="dropbtn"><i class="nav-icon fas fa-cubes"></i>
+                <span>Products</span>
+
+            </button>
+            <div class="dropdown-content">
+                <h6>{{'PRODUCT' | translate}}</h6>
+                <a *hasClaim="'PRO_VIEW_PRODUCTS'" [routerLink]="['/products']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link"> {{'LIST' | translate}}
+                </a>
+                <a *hasClaim="'PRO_ADD_PRODUCT'" [routerLink]="['/products/add']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">{{'ADD_NEW' | translate}}
+                </a>
+                <a *hasClaim="'PRO_MANAGE_PRO_CAT'" [routerLink]="['/product-category']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'PRODUCT_CATEGORY' | translate}}
+                </a>
+                <a *hasClaim="'PRO_MANAGE_TAX'" [routerLink]="['/tax']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'TAX' | translate}}
+                </a>
+                <a *hasClaim="'PRO_MANAGE_UNIT'" [routerLink]="['/unitConversation']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'UNIT_CONVERSATION' | translate}}
+                </a>
+                <!-- <a [routerLink]="['/batch']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+                    class="nav-link">
+                    Batch
+                </a>
+                <a [routerLink]="['/batch/batch-assign']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    Batch Assign
+                </a> -->
+                <a *hasClaim="'PRO_MANAGE_BRAND'" [routerLink]="['/brand']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'BRAND' | translate}}
+                </a>
+                <a *hasClaim="'PRO_MANAGE_WAREHOUSE'" [routerLink]="['/warehouse']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'WAREHOUSE' | translate}}
+                </a>
+                <a *hasClaim="'PRO_MANAGE_BRAND'" [routerLink]="['/manufacturer']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    Manufacturer
+                </a>
+                <!-- <a [routerLink]="['/products/waste-product']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    Waste Products
+                </a> -->
+            </div>
+        </div>
+    </div>
+    <div class="eachIcon navbar" [ngClass]="{'activetop': currentUrl == 'supplier'}"
+        *hasClaim="['SUPP_VIEW_SUPPLIERS','SUPP_ADD_SUPPLIER']">
+        <div class="dropdown">
+            <button class="dropbtn"><i class="nav-icon fas fa-truck"></i>
+                <span>Supplier</span>
+
+            </button>
+            <div class="dropdown-content">
+                <h6>{{'SUPPLIER' | translate}}</h6>
+                <a *hasClaim="'SUPP_VIEW_SUPPLIERS'" [routerLink]="['/supplier']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'LIST' | translate}}
+                </a>
+                <a *hasClaim="'SUPP_ADD_SUPPLIER'" [routerLink]="['/supplier/manage/addItem']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'ADD_NEW' | translate}}
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="eachIcon navbar" [ngClass]="{'activetop': currentUrl == 'customer'}"
+        *hasClaim="['CUST_VIEW_CUSTOMERS','CUST_ADD_CUSTOMER']">
+        <div class="dropdown">
+            <button class="dropbtn"><i class="nav-icon fa fa-users"></i>
+                <span>Customer</span>
+
+            </button>
+            <div class="dropdown-content">
+                <h6>{{'CUSTOMER' | translate}}</h6>
+                <a *hasClaim="'CUST_VIEW_CUSTOMERS'" [routerLink]="['/customer']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'LIST' | translate}}
+                </a>
+                <a *hasClaim="'CUST_ADD_CUSTOMER'" [routerLink]="['/customer/addItem']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'ADD_NEW' | translate}}
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="eachIcon navbar" [ngClass]="{'activetop': currentUrl == 'purchase-order-request'}"
+        *hasClaim="['POR_VIEW_PO_REQUESTS','POR_ADD_PO_REQUEST']">
+        <div class="dropdown">
+            <button class="dropbtn"><i class="nav-icon  fas fa-bookmark"></i>
+                <span>PO</span>
+
+            </button>
+            <div class="dropdown-content">
+                <h6>{{'PURCHASE_ORDER_REQUEST' | translate}}</h6>
+                <a *hasClaim="'POR_VIEW_PO_REQUESTS'" [routerLink]="['/purchase-order-request/list']"
+                    routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'LIST' | translate}}
+                </a>
+                <a *hasClaim="'POR_ADD_PO_REQUEST'" [routerLink]="['/purchase-order-request/add']"
+                    routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'ADD_NEW' | translate}}
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="eachIcon navbar" [ngClass]="{'activetop': currentUrl == 'purchase-order'}"
+        *hasClaim="['PO_VIEW_PURCHASE_ORDERS','PO_ADD_PO']">
+        <div class="dropdown">
+            <button class="dropbtn"><i class="nav-icon fas fa-cart-plus"></i>
+                <span>GRN</span>
+
+            </button>
+            <div class="dropdown-content">
+                <h6>{{'PURCHASE_ORDER' | translate}}</h6>
+                <a *hasClaim="'PO_VIEW_PURCHASE_ORDERS'" [routerLink]="['/purchase-order/list']"
+                    routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'LIST' | translate}}
+                </a>
+
+                <a *hasClaim="'PO_ADD_PO'" [routerLink]="['/purchase-order/add']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'ADD_NEW' | translate}}
+                </a>
+                <!-- <a [routerLink]="['/purchase-order/grn']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    GRN
+                </a> -->
+            </div>
+        </div>
+    </div>
+    <div class="eachIcon navbar" [ngClass]="{'activetop': currentUrl == 'purchase-order-return'}"
+        *hasClaim="['PO_RETURN_PO']">
+        <div class="dropdown">
+            <button class="dropbtn">
+                <i class="fas fa-exchange-alt"></i>
+                <span>GRNR</span>
+
+            </button>
+            <div class="dropdown-content">
+                <h6>{{'PURCHASE_ORDER_RETURN' | translate}}</h6>
+                <a *hasClaim="'PO_RETURN_PO'" [routerLink]="['/purchase-order-return/list']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'LIST' | translate}}
+                </a>
+                <a *hasClaim="'PO_RETURN_PO'" [routerLink]="['/purchase-order-return/add']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'ADD_NEW' | translate}}
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="eachIcon navbar" [ngClass]="{'activetop': currentUrl == 'sales-order'}"
+        *hasClaim="['SO_VIEW_SALES_ORDERS','SO_ADD_SO']">
+        <div class="dropdown">
+            <button class="dropbtn"><i class="nav-icon fas fa-shopping-basket"></i>
+                <span>SO</span>
+
+            </button>
+            <div class="dropdown-content">
+                <h6>{{'SALES_ORDER' | translate}}</h6>
+                <a *hasClaim="'SO_VIEW_SALES_ORDERS'" [routerLink]="['/sales-order/list']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'LIST' | translate}}
+                </a>
+                <a *hasClaim="'SO_ADD_SO'" [routerLink]="['/sales-order/add']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'ADD_NEW' | translate}}
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="eachIcon navbar" [ngClass]="{'activetop': currentUrl == 'sales-order-return'}"
+        *hasClaim="['SO_RETURN_SO']">
+        <div class="dropdown">
+            <button class="dropbtn"><i class="nav-icon fa fa-undo"></i>
+                <span>SOR</span>
+
+            </button>
+            <div class="dropdown-content">
+                <h6>{{'SALES_ORDER_RETURN' | translate}}</h6>
+                <a *hasClaim="'SO_RETURN_SO'" [routerLink]="['/sales-order-return/list']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'LIST' | translate}}
+                </a>
+                <a *hasClaim="'SO_RETURN_SO'" [routerLink]="['/sales-order-return/add']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'ADD_NEW' | translate}}
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="eachIcon navbar" [ngClass]="{'activetop': currentUrl == 'inventory'}"
+        *hasClaim="['INVE_VIEW_INVENTORIES']">
+        <div class="dropdown">
+            <button class="dropbtn" [routerLink]="['/inventory']"><i class="far fa-list-alt nav-icon"></i>
+                <span>Inventory</span>
+
+            </button>
+            <div class="dropdown-content">
+                <a [routerLink]="['/inventory']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+                    class="nav-link">
+                    {{'INVENTORY' | translate}}
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="eachIcon navbar" [ngClass]="{'activetop': currentUrl == 'expense'}"
+        *hasClaim="['EXP_VIEW_EXPENSES','EXP_ADD_EXPENSE','EXP_MANAGE_EXP_CATEGORY']">
+        <div class="dropdown">
+            <button class="dropbtn"><i class="fas fa-solid fa-wallet nav-icon"></i>
+                <span>Expense</span>
+            </button>
+            <div class="dropdown-content">
+                <h6>{{'EXPENSE' | translate}}</h6>
+                <a *hasClaim="'EXP_VIEW_EXPENSES'" [routerLink]="['/expense']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'LIST' | translate}}
+                </a>
+                <a *hasClaim="'EXP_ADD_EXPENSE'" [routerLink]="['/expense/add']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'ADD_NEW' | translate}}
+                </a>
+                <a *hasClaim="'EXP_MANAGE_EXP_CATEGORY'" [routerLink]="['/expense-category']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'EXPENSE_CATEGORY' | translate}}
+                </a>
+            </div>
+
+        </div>
+    </div>
+    <div class="eachIcon navbar" [ngClass]="{'activetop': currentUrl == 'report'}"
+        *hasClaim="['REP_PO_REP','REP_SO_REP','REP_PO_PAYMENT_REP','REP_EXPENSE_REP','REP_SO_PAYMENT_REP','REP_SALES_VS_PURCHASE_REP',
+    'REP_PRO_PP_REP','REP_PRO_SO_REPORT','REP_STOCK_REPORT','REP_SUP_PAYMENT_REP','REP_CUST_PAYMENT_REP','REP_VIEW_PRO_LOSS_REP']">
+        <div class="dropdown">
+            <button class="dropbtn"><i class="nav-icon fas fa-chart-bar"></i>
+                <span>Reports</span>
+
+            </button>
+            <div class="dropdown-content">
+                <h6>{{'REPORTS' | translate}}</h6>
+                <a (click)="routeLink('/daily-grn-report')" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    Daywise Report
+                </a>
+                <a *hasClaim="'REP_PO_REP'" [routerLink]="['/purchase-order-report']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'PURCHASE_ORDER_REPORT' | translate}}
+                </a>
+                <a *hasClaim="'REP_SO_REP'" [routerLink]="['/sales-order-report']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'SALES_ORDER_REPORT' | translate}}
+                </a>
+                <a *hasClaim="'REP_PRO_PP_REP'" [routerLink]="['/product-purchase-report']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'PRODUCT_PURCHASE_REPORT' | translate}}
+                </a>
+
+                <a *hasClaim="'REP_PRO_SO_REPORT'" [routerLink]="['/product-sales-report']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'PRODUCT_SALES_REPORT' | translate}}
+                </a>
+                <a *hasClaim="'REP_VIEW_WAR_REP'" [routerLink]="['/product-warehouse-report']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'PRODUCT_WAREHOUSE_REPORT' | translate}}
+                </a>
+                <a *hasClaim="'REP_STOCK_REPORT'" [routerLink]="['/stock-report']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'STOCK_REPORT' | translate}}
+                </a>
+                <a [routerLink]="['/stock-return']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+                    class="nav-link">
+                    Stock Return Report
+                </a>
+                <a *hasClaim="'REP_PO_PAYMENT_REP'" [routerLink]="['/purchase-payment-report']"
+                    routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'PURCHASE_PAYMENT_REPORT' | translate}}
+                </a>
+                <a [routerLink]="['/pending-price-report']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    Pending Price Report
+                </a>
+                <a *hasClaim="'REP_SO_PAYMENT_REP'" [routerLink]="['/sales-payment-report']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'SALES_PAYMENT_REPORT' | translate}}
+                </a>
+                <a *hasClaim="'REP_EXPENSE_REP'" [routerLink]="['/expense-report']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'EXPENSE_REPORT' | translate}}
+                </a>
+                <a *hasClaim="'REP_VIEW_PRO_LOSS_REP'" [routerLink]="['/profit-loss-report']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'PROFIT_VS_LOSS_REPORT' | translate}}
+                </a>
+                <a *hasClaim="'REP_SALES_VS_PURCHASE_REP'" [routerLink]="['/sales-purchase-report']"
+                    routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'SALES_VS_PURCHASE' | translate}}
+                </a>
+                <a *hasClaim="'REP_SUP_PAYMENT_REP'" [routerLink]="['/supplier-payment-report']"
+                    routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'SUPPLIER_PAYMENT_REPORT' | translate}}
+                </a>
+                <a *hasClaim="'REP_CUST_PAYMENT_REP'" [routerLink]="['/customer-payment-report']"
+                    routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'CUSTOMER_PAYMENT_REPORT' | translate}}
+                </a>
+                <a *hasClaim="'REP_VIEW_WAR_REP'" [routerLink]="['/warehouse-report']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'WAREHOUSE_REPORT' | translate}}
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="eachIcon navbar" [ngClass]="{'activetop': currentUrl == 'inquiry'}"
+        *hasClaim="['INQ_VIEW_INQUIRIES','INQ_ADD_INQUIRY']">
+        <div class="dropdown">
+            <button class="dropbtn"><i class="nav-icon fas fa-question-circle"></i>
+                <span>Inquiry</span>
+            </button>
+            <div class="dropdown-content">
+                <h6>{{'INQUIRY' | translate}}</h6>
+                <a *hasClaim="'INQ_VIEW_INQUIRIES'" [routerLink]="['/inquiry']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'LIST' | translate}}
+                </a>
+                <a *hasClaim="'INQ_ADD_INQUIRY'" [routerLink]="['/inquiry/add']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'ADD_NEW' | translate}}
+                </a>
+                <a *hasClaim="'INQ_MANAGE_INQ_STATUS'" [routerLink]="['/inquiry-status']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'INQUIRY_STATUS' | translate}}
+                </a>
+                <a *hasClaim="'INQ_MANAGE_INQ_SOURCE'" [routerLink]="['/inquiry-source']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'INQUIRY_SOURCES' | translate}}
+                </a>
+
+            </div>
+        </div>
+    </div>
+    <div class="eachIcon navbar" [ngClass]="{'activetop': currentUrl == 'reminders'}"
+        *hasClaim="['REM_VIEW_REMINDERS','REM_ADD_REMINDER']">
+        <div class="dropdown">
+            <button class="dropbtn"><i class="far fa-bell nav-icon"></i>
+                <span>Reminder</span>
+            </button>
+            <div class="dropdown-content">
+                <h6>{{'REMINDER' | translate}}</h6>
+                <a *hasClaim="'REM_VIEW_REMINDERS'" [routerLink]="['/reminders']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'LIST' | translate}}
+                </a>
+                <a *hasClaim="'REM_ADD_REMINDER'" [routerLink]="['/reminders/add']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'ADD_NEW' | translate}}
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="eachIcon navbar" [ngClass]="{'activetop': currentUrl == 'notifications'}">
+        <div class="dropdown">
+            <button class="dropbtn"><i class="fas fa-stopwatch nav-icon"></i>
+                <span>Notification</span>
+
+            </button>
+            <div class="dropdown-content">
+                <h6>Notification</h6>
+
+                <a [routerLink]="['/notifications']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+                    class="nav-link">
+                    {{'NOTIFICATIONS' | translate}}
+                </a>
+                <a [routerLink]="['/notifications/add-push-notification']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    Add Push Notification
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="eachIcon navbar" [ngClass]="{'activetop': currentUrl == 'roles'}"
+        *hasClaim="['ROLES_VIEW_ROLES','ROLES_ADD_ROLE']">
+        <div class="dropdown">
+            <button class="dropbtn"><i class="nav-icon fas fa-users-cog"></i>
+                <span>Roles</span>
+
+            </button>
+            <div class="dropdown-content">
+                <h6>{{'ROLES' | translate}}</h6>
+                <a *hasClaim="'ROLES_VIEW_ROLES'" [routerLink]="['/roles']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'LIST' | translate}}
+                </a>
+                <a *hasClaim="'ROLES_ADD_ROLE'" [routerLink]="['/roles/manage']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'ADD_NEW' | translate}}
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="eachIcon navbar" [ngClass]="{'activetop': currentUrl == 'users'}"
+        *hasClaim="['USR_VIEW_USERS','USR_ADD_USER','USR_ASSIGN_USR_ROLES','USR_ONLINE_USERS']">
+        <div class="dropdown">
+            <button class="dropbtn"><i class="nav-icon fa fa-user-plus"></i>
+                <span>Users</span>
+
+            </button>
+            <div class="dropdown-content">
+                <h6>{{'USERS' | translate}}</h6>
+                <a *hasClaim="'USR_VIEW_USERS'" [routerLink]="['/users']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'LIST' | translate}}
+                </a>
+                <a *hasClaim="'USR_ADD_USER'" [routerLink]="['/users/manage']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'ADD_NEW' | translate}}
+                </a>
+                <a *hasClaim="'USR_ASSIGN_USR_ROLES'" [routerLink]="['/roles/users']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'USER_ROLES' | translate}}
+                </a>
+                <a *hasClaim="'USR_ONLINE_USERS'" [routerLink]="['/sessions']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'CURRENT_ONLINE_USERS' | translate}}
+                </a>
+
+            </div>
+        </div>
+    </div>
+    <div class="eachIcon navbar" [ngClass]="{'activetop': currentUrl == 'email'}"
+        *hasClaim="['EMAIL_MANAGE_EMAIL_SMTP_SETTINS','EMAIL_MANAGE_EMAIL_TEMPLATES','EMAIL_SEND_EMAIL']">
+        <div class="dropdown">
+            <button class="dropbtn"><i class="nav-icon fas fa-envelope-open-text"></i>
+                <span>Email</span>
+
+            </button>
+            <div class="dropdown-content rightside">
+                <h6>{{'EMAIL' | translate}}</h6>
+                <a *hasClaim="'EMAIL_MANAGE_EMAIL_SMTP_SETTINS'" [routerLink]="['/email-smtp']"
+                    routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'SMTP_SETTINGS' | translate}}
+                </a>
+                <a *hasClaim="'EMAIL_MANAGE_EMAIL_TEMPLATES'" [routerLink]="['/emailtemplate']"
+                    routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'EMAIL_TEMPLATE' | translate}}
+                </a>
+                <a *hasClaim="'EMAIL_SEND_EMAIL'" [routerLink]="['/send-email']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'SEND_EMAIL' | translate}}
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="eachIcon navbar" [ngClass]="{'activetop': currentUrl == 'settings'}"
+        *hasClaim="['SETT_UPDATE_COM_PROFILE','SETT_MANAGE_COUNTRY','SETT_MANAGE_CITY']">
+        <div class="dropdown">
+            <button class="dropbtn"><i class="nav-icon fa fa-tools"></i>
+                <span>Settings</span>
+
+            </button>
+            <div class="dropdown-content rightside">
+                <h6>{{'SETTINGS' | translate}}</h6>
+                <a *hasClaim="'SETT_UPDATE_COM_PROFILE'" [routerLink]="['/company-profile']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'COMPANY_PROFILE' | translate}}
+                </a>
+                <a *hasClaim="'SETT_MANAGE_COUNTRY'" [routerLink]="['/country']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'COUNTRY' | translate}}
+                </a>
+                <a *hasClaim="'SETT_MANAGE_CITY'" [routerLink]="['/cities']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'CITY' | translate}}
+                </a>
+                <a *hasClaim="'SETT_MANAGE_CITY'" [routerLink]="['/image-upload']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    Image Upload
+                </a>
+                <a *hasClaim="'SETT_MANAGE_CITY'" [routerLink]="['/rewards-point']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    Rewards Point
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="eachIcon navbar" [ngClass]="{'activetop': currentUrl == 'logs'}"
+        *hasClaim="['LOGS_VIEW_LOGIN_AUDITS','LOGS_VIEW_ERROR_LOGS']">
+        <div class="dropdown">
+            <button class="dropbtn"><i class="fas fa-exclamation-triangle nav-icon"></i>
+                <span>Logs</span>
+
+            </button>
+            <div class="dropdown-content rightside">
+                <h6>{{'LOGS' | translate}}</h6>
+                <a *hasClaim="'LOGS_VIEW_LOGIN_AUDITS'" [routerLink]="['/login-audit']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'LOGIN_AUDIT' | translate}}
+                </a>
+                <a *hasClaim="'LOGS_VIEW_ERROR_LOGS'" [routerLink]="['/logs']" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+                    {{'ERROR_LOGS' | translate}}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

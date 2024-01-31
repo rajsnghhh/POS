@@ -1,0 +1,28 @@
+tr.example-detail-row {
+    height: 0 !important;
+  }
+  
+  .example-element-row td {
+    border-bottom-width: 0;
+  }
+  
+  .example-element-detail {
+    overflow: hidden;
+    display : flex;
+  }
+  
+  .inner-table {
+    margin: 1em;
+    padding: 1em;
+    width: 100% !important;
+  }
+
+.spinLoad{
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.clermsg{
+  font-size: 19px;
+  color: red;
+  font-weight: 600;
+  text-align: center;
+}

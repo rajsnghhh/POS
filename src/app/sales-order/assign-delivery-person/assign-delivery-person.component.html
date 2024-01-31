@@ -1,0 +1,54 @@
+<div class="modal-content1">
+    <div class="modal-header">
+        <div class="d-flex w-100 align-items-center justify-content-between">
+            <div class="col-md-9 col">
+                <h4 class="modal-title">
+                    Assign Delivery Person
+                </h4>
+            </div>
+            <div class="col-sm-auto col-auto ml-auto">
+                <button type="button" class="close" (click)="onCancel()" data-dismiss="modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="paymentsForm">
+        <div class="modal-body">
+            <div>
+                <div class="form-group">
+                    <label class="text-danger" for="deliveryPersonId">Delivery Person *</label>
+                    <mat-select [dir]="langDir" placeholder="Select delivery person" class="form-control"
+                        formControlName="deliveryPersonId">
+                        <mat-option [dir]="langDir" *ngFor="let delivery of userData"
+                            [value]="delivery?.userId">
+                            {{delivery?.firstName}} {{delivery?.lastName}}
+                        </mat-option>
+                    </mat-select>
+                    <div
+                        *ngIf="paymentsForm.get('deliveryPersonId').touched && paymentsForm.get('deliveryPersonId').errors">
+                        <div *ngIf="paymentsForm.get('deliveryPersonId').errors?.required">
+                            <div class="text-danger">
+                                Delivery Person is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="form-row w-100">
+                <div class="col-md-auto col-auto">
+                    <button *hasClaim="'SO_ADD_SO_PAYMENT'" class="btn btn-success btn-sm m-right-10" (click)="saveSalesOrderPayment()"
+                    cdkFocusInitial><i class="fas fa-save"></i>
+                    {{"SAVE" | translate}}
+                </button>
+                    <button class="btn btn-danger btn-sm" (click)="onCancel()">
+                        <i class="fas fa-times-circle"></i>
+                        {{"CANCEL" | translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

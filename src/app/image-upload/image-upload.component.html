@@ -1,0 +1,183 @@
+<div class="page-header-main mt-4">
+    <div class="row align-items-center justify-content-between">
+        <div class="col-md-auto col-sm-auto">
+            <div class="content-header">
+                <h1>Image Upload</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 col-12 order-2 order-md-1 col-md-6">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-md-auto col-sm-auto col">
+                        <div class="content-header">
+                            <h6> Log In Banner Upload</h6>
+                        </div>
+                    </div>
+                    <div class="col-md-auto col-sm-auto col-auto mb-2">
+                        <button class="btn blue-btn btn-sm m-right-10" (click)="manageImage('Login')">
+                            <i class="fas fa-plus"></i>
+                            Add Image
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table mat-table [dataSource]="loginImage" [dir]="langDir" class="table table-bordered table-hover">
+                        <ng-container matColumnDef="action">
+                            <th class="table-column-100" mat-header-cell *matHeaderCellDef> {{"ACTION" | translate}}
+                            </th>
+                            <td class="table-column-100" mat-cell *matCellDef="let element">
+                                <button (click)="deleteBannerImage(element,'Login')" class="btn btn-danger btn-sm" type="button">
+                                    <i class="fas fa-trash-alt"></i>
+                                    <span class="d-none d-sm-inline"> {{"DELETE" | translate}}</span>
+                                </button>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Name">
+                            <th mat-header-cell *matHeaderCellDef class="table-column-150">Name </th>
+                            <td mat-cell *matCellDef="let element" class="table-column-150">{{element.name}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="images">
+                            <th mat-header-cell *matHeaderCellDef>Image </th>
+                            <td mat-cell *matCellDef="let element">
+
+                                <ng-container *ngIf="element.imageUrl; else noImage">
+                                    <img class="img-thumbnail product-thumbnail my-2" [src]="baseUrl + element.imageUrl"
+                                        alt="Login Banner">
+                                </ng-container>
+                                <ng-template #noImage>
+                                    <img class="img-thumbnail product-thumbnail my-2" src="assets/images/no-preview.jpg"
+                                        alt="Login Banner">
+                                </ng-template>
+
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-12 order-2 order-md-1 col-md-6">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-md-auto col-sm-auto col">
+                        <div class="content-header">
+                            <h6> Category Banner Upload</h6>
+                        </div>
+                    </div>
+                    <div class="col-md-auto col-sm-auto col-auto mb-2">
+                        <button class="btn blue-btn btn-sm m-right-10" (click)="manageImage('Category')">
+                            <i class="fas fa-plus"></i>
+                            Add Image
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table mat-table [dataSource]="categoryImage" [dir]="langDir"
+                        class="table table-bordered table-hover">
+                        <ng-container matColumnDef="action">
+                            <th class="table-column-100" mat-header-cell *matHeaderCellDef> {{"ACTION" | translate}}
+                            </th>
+                            <td class="table-column-100" mat-cell *matCellDef="let element">
+                                <button (click)="deleteBannerImage(element,'Category')" class="btn btn-danger btn-sm" type="button">
+                                    <i class="fas fa-trash-alt"></i>
+                                    <span class="d-none d-sm-inline"> {{"DELETE" | translate}}</span>
+                                </button>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Name">
+                            <th mat-header-cell *matHeaderCellDef class="table-column-150">Name </th>
+                            <td mat-cell *matCellDef="let element" class="table-column-150">{{element.name}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="images">
+                            <th mat-header-cell *matHeaderCellDef>Image </th>
+                            <td mat-cell *matCellDef="let element">
+
+                                <ng-container *ngIf="element.imageUrl; else noImage">
+                                    <img class="img-thumbnail product-thumbnail my-2" [src]="baseUrl + element.imageUrl"
+                                        alt="Login Banner">
+                                </ng-container>
+                                <ng-template #noImage>
+                                    <img class="img-thumbnail product-thumbnail my-2" src="assets/images/no-preview.jpg"
+                                        alt="Login Banner">
+                                </ng-template>
+
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-12 order-2 order-md-1 col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-md-auto col-sm-auto col">
+                        <div class="content-header">
+                            <h6>Banner Upload</h6>
+                        </div>
+                    </div>
+                    <div class="col-md-auto col-sm-auto col-auto">
+                        <button class="btn blue-btn btn-sm m-right-10" (click)="manageImage('Banner')">
+                            <i class="fas fa-plus"></i>
+                            Add Image
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table mat-table [dataSource]="bannerImage" [dir]="langDir"
+                        class="table table-bordered table-hover">
+                        <ng-container matColumnDef="action">
+                            <th class="table-column-100" mat-header-cell *matHeaderCellDef> {{"ACTION" | translate}}
+                            </th>
+                            <td class="table-column-100" mat-cell *matCellDef="let element">
+                                <button (click)="deleteBannerImage(element,'Banner')" class="btn btn-danger btn-sm" type="button">
+                                    <i class="fas fa-trash-alt"></i>
+                                    <span class="d-none d-sm-inline"> {{"DELETE" | translate}}</span>
+                                </button>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Name">
+                            <th mat-header-cell *matHeaderCellDef class="table-column-150">Name </th>
+                            <td mat-cell *matCellDef="let element" class="table-column-150">{{element.name}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="images">
+                            <th mat-header-cell *matHeaderCellDef>Image </th>
+                            <td mat-cell *matCellDef="let element">
+
+                                <ng-container *ngIf="element.imageUrl; else noImage">
+                                    <img class="img-thumbnail product-thumbnail my-2" [src]="baseUrl + element.imageUrl"
+                                        alt="Login Banner">
+                                </ng-container>
+                                <ng-template #noImage>
+                                    <img class="img-thumbnail product-thumbnail my-2" src="assets/images/no-preview.jpg"
+                                        alt="Login Banner">
+                                </ng-template>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,93 @@
+<div class="modal-content1">
+    <div class="modal-header">
+        <div class="d-flex w-100 align-items-center justify-content-between">
+            <div class="col-md-10 col">
+                <h4 class="modal-title">
+                    {{"MANAGE_PRODUCT_CATEGORY" | translate}}
+                </h4>
+            </div>
+            <div class="col-sm-auto col-auto ml-auto">
+                <button type="button" class="close" (click)="onCancel()" data-dismiss="modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <form name="form" (ngSubmit)="categoryForm.form.valid && saveCategory()" #categoryForm="ngForm" novalidate>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="masterCategory">Master Category <span class="text-danger">*</span></label>
+                        <select id="masterCategory" [(ngModel)]="data.productMainCategoryId"
+                            name="productMainCategoryId" class="form-control"
+                            required><!-- (change)="setProductMainCategoryID($event.target.value)"   -->
+                            <option value="" disabled>-- select --</option>
+                            <option *ngFor="let category of masterCategoryList" [value]="category.id">{{category.name}}
+                            </option>
+                        </select>
+                        <div *ngIf="name.invalid && (name.dirty || name.touched)">
+                            <div class="text-danger" *ngIf="name.errors?.required">
+                                Master Category Is Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="categoryName">{{'NAME' | translate}} <span class="text-danger">*</span></label>
+                        <input required [(ngModel)]="data.name" type="text" name="name" #name="ngModel"
+                            class="form-control" id="categoryName">
+                        <div *ngIf="name.invalid && (name.dirty || name.touched)">
+                            <div class="text-danger" *ngIf="name.errors?.required">
+                                {{'CATEGORY_NAME_IS_REQUIRED' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="description">{{'DESCRIPTION' | translate}}</label>
+                        <textarea [(ngModel)]="data.description" name="description" type="text"
+                            class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label>
+                        Category Image
+                    </label>
+                    <mat-card [dir]="langDir" class="cus-mat-card text-center categoryimage">
+                        <input hidden (change)="onCategoryImageSelect($event)" #fileInput name="logo" type="file"
+                            name="Category Image" fxFlex="30">
+                        <img *ngIf="categoryImgSrc" class="full-width img-fluid" [src]="categoryImgSrc" />
+                        <img *ngIf="!categoryImgSrc" class="full-width img-fluid" src="assets/images/no-preview.jpg" />
+                        <mat-card-actions>
+                            <button type="button" *ngIf="!categoryImgSrc" class="btn btn-success btn-sm m-right-10"
+                                (click)="fileInput.click()">
+                                <i class="far fa-image"></i> {{"ADD" | translate}}</button>
+                            <button type="button" *ngIf="categoryImgSrc" class="btn btn-success btn-sm m-right-10"
+                                (click)="fileInput.click()">
+                                <i class="far fa-image"></i> {{"CHANGE" | translate}}</button>
+                            <button *ngIf="categoryImgSrc" type="button" (click)="onCategoryImageRemove()"
+                                class="btn btn-danger btn-sm mt-1">
+                                <i class="fas fa-trash-alt"></i> {{"REMOVE" | translate}}</button>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button *hasClaim="'PRO_MANAGE_PRO_CAT'" type="submit" class="btn btn-success btn-sm m-right-10"
+                cdkFocusInitial><i class="las la-save"></i> {{'SAVE' |
+                translate}}</button>
+            <button type="button" class="btn btn-danger btn-sm" (click)="onCancel()"> <i
+                    class="las la-times-circle"></i>
+                {{'CANCEL' | translate}}</button>
+        </div>
+    </form>
+</div>

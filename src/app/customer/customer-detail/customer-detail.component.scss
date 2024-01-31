@@ -1,0 +1,32 @@
+.w-100 {
+  width: 100%;
+}
+::ng-deep .k-textbox-container,
+.k-floating-label-container {
+  width: 100%;
+}
+.chem-img {
+  width: 150px;
+  height: 150px;
+}
+.display-none {
+  display: none;
+}
+.mt-10 {
+  margin-top: 10px;
+}
+
+.pt-10 {
+  padding-top: 10px;
+}
+.checkbox{
+  padding: 4px;
+  margin: 5px 0px 5px 19px;
+
+  label{
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0px 7px;
+    color: #13a913;
+  }
+}

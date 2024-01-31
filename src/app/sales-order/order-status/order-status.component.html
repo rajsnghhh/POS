@@ -1,0 +1,45 @@
+<div class="modal-content1">
+    <div class="modal-header">
+        <div class="d-flex w-100 align-items-center justify-content-between">
+            <div class="col-md-9 col">
+                <h4 class="modal-title">
+                    Order Status
+                </h4>
+            </div>
+            <div class="col-sm-auto col-auto ml-auto">
+                <button type="button" class="close" (click)="onCancel()" data-dismiss="modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-12 hh-grayBox pt45 pb20">
+                    <div class="row justify-content-between">
+                        <div class="order-tracking " *ngFor="let status of orderStatus;let i=index" (click)="statusChange(status,i)"
+                            [ngClass]="{'completed': i<=currentStatus}">
+                            <span class="is-complete"></span>
+                            <p>{{status.status}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="form-row w-100">
+            <div class="col-md-auto col-auto">
+                <button class="btn btn-success btn-sm m-right-10" (click)="orderStatusSave()"
+                cdkFocusInitial><i class="fas fa-save"></i>
+                {{"SAVE" | translate}}
+            </button>
+                <button class="btn btn-danger btn-sm" (click)="onCancel()">
+                    <i class="fas fa-times-circle"></i>
+                    {{"CANCEL" | translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

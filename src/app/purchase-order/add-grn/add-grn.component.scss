@@ -1,0 +1,89 @@
+.hr {
+  border-bottom: 1px solid #2095F3;
+}
+
+.paymentype {
+  padding: 5px;
+
+  input {
+    margin: 6px;
+  }
+
+  label {
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
+
+.fileupload {
+  border: 1px solid #e1e1e1;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 60%;
+  padding: 30px;
+
+  input {
+    display: none;
+  }
+
+  .imgageicon {
+    width: 100%;
+    display: flex;
+    margin: auto;
+    font-size: 40px;
+    justify-content: center;
+    align-items: center;
+    color: cornflowerblue;
+  }
+
+  .uploadbtn {
+    width: 100%;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    color: green;
+  }
+
+  .rightsign {
+    width: 100%;
+    display: flex;
+    margin: auto;
+    font-size: 40px;
+    justify-content: center;
+    align-items: center;
+    color: green;
+  }
+}
+
+table,
+th,
+td {
+  border: 1px solid grey;
+  border-collapse: collapse !important;
+  text-align: center;
+  font-size: 15px;
+}
+
+.modal-footer {
+  p {
+    text-align: center;
+    width: 100%;
+    color: red;
+    font-size: 15px;
+  }
+}
+
+.close {
+  color: red;
+}
+
+.notedesign {
+  margin: 14px 0px;
+  font-size: 15px;
+  font-weight: 500;
+  color: red;
+}

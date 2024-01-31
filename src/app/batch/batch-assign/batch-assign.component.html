@@ -1,0 +1,145 @@
+<div class="page-header-main">
+    <div class="row align-items-center justify-content-between">
+        <div class="col-md-auto col-sm-auto col">
+            <div class="content-header">
+                <h1>Assign Batch</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form [formGroup]="batchForm">
+    <div class="modal-body">
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="text-danger" for="brandName">Product Name *</label>
+                            <input formControlName="pname" placeholder="Enter Product Name" type="text" class="form-control">
+                            <div *ngIf="batchForm.get('pname').touched && batchForm.get('pname').errors">
+                                <div class="text-danger"
+                                    *ngIf="batchForm.get('pname').touched && batchForm.get('pname').errors?.required">
+                                    Product Name is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-danger">Batch No. *</label>
+                        <mat-select placeholder="Select Batch No" class="form-control" formControlName="batchno">
+                            <mat-option value="1">1</mat-option>
+                            <mat-option value="2">2</mat-option>
+                            <mat-option value="3">3</mat-option>
+                            <mat-option value="4">4</mat-option>
+                        </mat-select>
+                        <!-- <mat-error [dir]="langDir"
+                        *ngIf="supplierForm.get('supplierAddress').get('countryName').touched && supplierForm.get('supplierAddress').get('countryName').errors?.required"
+                        class="text-danger">
+                        {{'PLEASE_SELECT_COUNTRY' | translate}}
+                    </mat-error> -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="brandName">Package Date</label>
+                            <input formControlName="packdate" type="date" class="form-control">
+                            <div *ngIf="batchForm.get('packdate').touched && batchForm.get('packdate').errors">
+                                <div class="text-danger"
+                                    *ngIf="batchForm.get('packdate').touched && batchForm.get('packdate').errors?.required">
+                                    Package Date is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="brandName">Expiry Date</label>
+                            <input formControlName="expdate" type="date" class="form-control">
+                            <div *ngIf="batchForm.get('expdate').touched && batchForm.get('expdate').errors">
+                                <div class="text-danger"
+                                    *ngIf="batchForm.get('expdate').touched && batchForm.get('expdate').errors?.required">
+                                    Expiry Date is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="purchaserate">Purchase Rate</label>
+                            <input formControlName="purchaserate" type="text" class="form-control">
+                            <div *ngIf="batchForm.get('purchaserate').touched && batchForm.get('purchaserate').errors">
+                                <div class="text-danger"
+                                    *ngIf="batchForm.get('purchaserate').touched && batchForm.get('purchaserate').errors?.required">
+                                    Purchase Rate is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="mrp">MRP</label>
+                            <input formControlName="mrp" type="text" class="form-control">
+                            <div *ngIf="batchForm.get('mrp').touched && batchForm.get('mrp').errors">
+                                <div class="text-danger"
+                                    *ngIf="batchForm.get('mrp').touched && batchForm.get('mrp').errors?.required">
+                                    MRP is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="percentage">Percent</label>
+                            <input formControlName="percentage" type="text" class="form-control">
+                            <div *ngIf="batchForm.get('percentage').touched && batchForm.get('percentage').errors">
+                                <div class="text-danger"
+                                    *ngIf="batchForm.get('percentage').touched && batchForm.get('percentage').errors?.required">
+                                    Percent is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="salerate">Salerate</label>
+                            <input formControlName="salerate" type="text" class="form-control">
+                            <div *ngIf="batchForm.get('salerate').touched && batchForm.get('salerate').errors">
+                                <div class="text-danger"
+                                    *ngIf="batchForm.get('salerate').touched && batchForm.get('salerate').errors?.required">
+                                    Salerate is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row w-100">
+            <div class="col-md-auto col-auto">
+                <button class="btn btn-success btn-sm m-right-10" (click)="saveBrand()" cdkFocusInitial><i
+                        class="fas fa-save"></i>
+                    Save
+                </button>
+                <button class="btn btn-danger btn-sm" (click)="onCancel()">
+                    <i class="fas fa-times-circle"></i>
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

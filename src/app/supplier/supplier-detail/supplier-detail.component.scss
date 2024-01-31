@@ -1,0 +1,56 @@
+.w-100 {
+  width: 100%;
+}
+
+::ng-deep .k-textbox-container,
+.k-floating-label-container {
+  width: 100%;
+}
+
+.chem-img {
+  width: 150px;
+  height: 150px;
+}
+
+.display-none {
+  display: none;
+  ;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.mainbody{
+  zoom: 0.9;
+}
+.inputfile{
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background-color: white;
+  min-height: 38px;
+  padding: 7px;
+
+  .eachsection{
+    border: 1px solid rgba(0, 0, 0, 0.38);
+    border-radius: 2px;
+    margin-right: 2px;
+    padding: 5px;
+    font-size: 14px;
+    display: inline-block;
+  }
+}
+
+.filesection{
+  input{
+    display: none;
+  }
+}
+
+.uploadbtn{
+    margin: 27px 0px 0px -29px;
+    background-color: #40b940;
+    color: white;
+    font-size: 23px;
+    font-weight: 500;
+    border: 1px solid #47ab47;
+}

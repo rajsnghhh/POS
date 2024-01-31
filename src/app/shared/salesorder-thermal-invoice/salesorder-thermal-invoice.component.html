@@ -1,0 +1,95 @@
+<div id="salesOrderForThermalInvoice">
+    <div class="ticket" style="margin-right: 30px;">
+        <div style="text-align: center;align-content: center;">
+            <p style="font-size: 15px;">
+                <span *ngIf="localStorageData.counter.counterNo=='2'"><b>SOUTHERN STAR BAKERY</b></span>
+                <span *ngIf="localStorageData.counter.counterNo=='1'"><b>NEEDS</b></span>
+                <br>HQ Southern Command,Maitri Complex Pune 411001 
+            </p>
+            <span style="font-size: 10px;">CASH INVOICE</span>
+        </div>
+       
+        <div style=" width: 100%;display: flex;flex-wrap: wrap; justify-content: space-between;align-items: center;margin-top: 8px;">
+            <h6 style="padding:1px;margin:0;">Bill No : {{salesData?.billNo}}</h6>
+            <h6 style="padding:1px;margin:0;">Order No : {{salesOrderForThermalInvoice?.orderNumber}}</h6>
+            <h6 style="padding:1px;margin:0;">Date : {{salesOrderForThermalInvoice?.soCreatedDate | utcToLocalTime:'shortDate'}}</h6>
+            <h6 style="padding:1px;margin:0;">Time : {{currenTime}}</h6>
+        </div>
+
+        <section style="width: 100%;overflow: hidden;display: block;margin-top: 8px;">
+            <table
+                style="margin-top:6px;width: 100%;margin-right: 10px;zoom:0.5; box-sizing: border-box; display: block;">
+                <thead>
+                    <tr>
+                        <th class="hsn" style="border: 1px solid grey; width: 5%;max-width: 5%;">Sr No.</th>
+                        <th class="item" style="border: 1px solid grey; width: 30%;max-width: 30%;">Item</th>
+                        <th class="qty" style="border: 1px solid grey; width: 5%;max-width: 5%;">Qty</th>
+                        <th class="rate" style="border: 1px solid grey; width: 15%;max-width: 15%;">Rate</th>
+                        <th class="mrp" style="border: 1px solid grey; width: 15%;max-width: 15%;">MRP</th>
+                        <th class="amt" style="border: 1px solid grey; width: 15%;max-width: 15%;">Amt</th>
+                        <th class="size" style="border: 1px solid grey; width: 15%;max-width: 15%;">Savings</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let salesItem of salesOrderItems;let i=index">
+                        <td class="hsn" style="border: 1px solid grey; width: 5%;max-width: 5%;">
+                            {{i+1}}</td>
+                        <td class="item" style="border: 1px solid grey; width: 30%;max-width: 30%;">
+                            {{salesItem.productName}}</td>
+                        <td class="qty" style="border: 1px solid grey; width: 5%;max-width: 5%;">{{salesItem.quantity}}
+                        </td>
+                        <td class="rate" style="border: 1px solid grey; width: 15%;max-width: 15%;">
+                            {{salesItem.unitPrice  | customRound}}<!-- number : '1.2-2' -->
+                        </td>
+                        <td class="mrp" style="border: 1px solid grey; width: 15%;max-width: 15%;">
+                            {{salesItem.product.mrp  | customRound}}</td>
+                        <td class="amt" style="border: 1px solid grey; width: 15%;max-width: 15%;">
+                            {{(salesItem?.quantity *
+                            salesItem?.unitPrice) - salesItem.discount +
+                            salesItem.taxValue  | customRound}}</td>
+                        <td class="size" style="border: 1px solid grey; width: 10%;max-width: 10%;">
+                                {{salesItem.product.mrp - salesItem.unitPrice  | customRound}}</td>    
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <div
+            style=" width: 100%;display: flex;flex-wrap: wrap; justify-content: space-between;align-items: center;margin-top: 8px;border-bottom: 1px solid black;font-size: 10px;">
+            <div style="display: flex;font-size: 10px; width: 50%;margin-bottom: 6px;">
+                Total Items : {{salesOrderItems.length}}
+                <br>
+                <!-- Total Qty : {{totalQuantity}} -->
+                <br>
+                {{paymentMethodType}} : {{netBillAmount | customRound}}
+            </div>
+            <div style="display: flex; font-size: 10px;width: 35%;margin-bottom: 6px;">
+                Total
+                <br>
+                Round off
+                <br>
+                Carry Bag
+                <br>
+                Net Bill Amount
+            </div>
+            <div style="display: flex;font-size: 10spx;width: 15%;margin-bottom: 6px;">
+                {{totalAmount | customRound}}
+                <br>
+                {{roundOff | customRound}}
+                <br>
+                {{totalCarryBagPrice | customRound}}
+                <br>
+                {{netBillAmount | customRound}}
+            </div>
+        </div>
+        <div style="text-align: center;align-content: center;border-bottom: 1px solid black;margin-bottom: 8px;font-size: 12px;">
+            <h4 style="padding:0;margin:0;">TOTAL SAVINGS IS {{totalSavedPrice | customRound}}</h4>
+        </div>
+        <!-- <span>CGST : 0</span>&nbsp;&nbsp;<span>SGST : 0 </span>&nbsp;&nbsp;<span>CESS : 0</span> -->
+
+        <p style="font-size: 11px;">
+            <u>Terms</u> : All packed items are exchangeable within same day.
+        </p>
+        <h6 style="text-align: center;align-content: center;">Please Visit Again. Thank You.</h6>
+    </div>
+</div>

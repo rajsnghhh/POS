@@ -1,0 +1,16 @@
+import { Claim } from './claim';
+
+export class UserAuth {
+  id?: string;
+  userName: string = '';
+  firstName: string = '';
+  lastName: string = '';
+  email: string = '';
+  phoneNumber: string = '';
+  bearerToken: string = '';
+  isAuthenticated: boolean = false;
+  profilePhoto?: string;
+  claims: Claim[] = [];
+  logoUrl?: string;
+  nonCSDCanteensId: string = '';
+}

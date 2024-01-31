@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="223.89" height="129.63" viewBox="0 0 223.89 129.63">
+  <g id="Group_28" data-name="Group 28" transform="translate(-112.949 -438)">
+    <g id="Group_27" data-name="Group 27" transform="translate(164 374)">
+      <g id="Group_26" data-name="Group 26" transform="translate(0 64)">
+        <g id="Group_25" data-name="Group 25">
+          <path id="Path_15" data-name="Path 15" d="M158.436,164.823V78.4a14.42,14.42,0,0,0-14.4-14.4H14.4A14.42,14.42,0,0,0,0,78.4v86.42a14.42,14.42,0,0,0,14.4,14.4H144.033A14.42,14.42,0,0,0,158.436,164.823Zm-151.234,0V78.4a7.209,7.209,0,0,1,7.2-7.2h129.63a7.209,7.209,0,0,1,7.2,7.2v86.42a7.209,7.209,0,0,1-7.2,7.2H14.4A7.209,7.209,0,0,1,7.2,164.823Z" transform="translate(0 -64)" fill="#007bff"/>
+          <path id="Path_16" data-name="Path 16" d="M218.7,138.667a3.6,3.6,0,0,0-3.6,3.6v86.42a7.209,7.209,0,0,1-7.2,7.2H78.267a3.6,3.6,0,0,0,0,7.2H207.9a14.42,14.42,0,0,0,14.4-14.4v-86.42A3.6,3.6,0,0,0,218.7,138.667Z" transform="translate(-49.46 -113.461)" fill="#007bff"/>
+          <path id="Path_17" data-name="Path 17" d="M302.811,298.667H259.6a3.6,3.6,0,1,0,0,7.2h43.21a3.6,3.6,0,0,0,0-7.2Z" transform="translate(-169.58 -219.449)" fill="#007bff"/>
+          <path id="Path_18" data-name="Path 18" d="M302.811,234.667H259.6a3.6,3.6,0,0,0,0,7.2h43.21a3.6,3.6,0,0,0,0-7.2Z" transform="translate(-169.58 -177.054)" fill="#007bff"/>
+          <path id="Path_19" data-name="Path 19" d="M302.811,170.667H259.6a3.6,3.6,0,0,0,0,7.2h43.21a3.6,3.6,0,0,0,0-7.2Z" transform="translate(-169.58 -134.659)" fill="#007bff"/>
+          <path id="Path_20" data-name="Path 20" d="M121.069,178.14a14.4,14.4,0,1,0-14.4-14.4A14.42,14.42,0,0,0,121.069,178.14Zm0-21.6a7.2,7.2,0,1,1-7.2,7.2A7.209,7.209,0,0,1,121.069,156.535Z" transform="translate(-70.658 -120.527)" fill="#007bff"/>
+          <path id="Path_21" data-name="Path 21" d="M114.32,250.639c-5.036-2.419-12.849-5.306-21.513-5.306s-16.478,2.887-21.513,5.306A12.527,12.527,0,0,0,64,261.916v1.646a7.1,7.1,0,0,0,7.2,6.977h43.21a7.1,7.1,0,0,0,7.2-6.977v-1.646A12.526,12.526,0,0,0,114.32,250.639Zm.091,12.7-43.21.225v-1.646a5.384,5.384,0,0,1,3.214-4.786,43.742,43.742,0,0,1,18.391-4.6,43.736,43.736,0,0,1,18.391,4.6,5.384,5.384,0,0,1,3.214,4.786Z" transform="translate(-42.395 -184.119)" fill="#007bff"/>
+        </g>
+      </g>
+    </g>
+    <g id="Icon_feather-upload" data-name="Icon feather-upload" transform="translate(102.123 513.5)">
+      <path id="Path_23" data-name="Path 23" d="M49.479,23.99,29.99,4.5,10.5,23.99" transform="translate(3.862)" fill="none" stroke="#007bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+      <path id="Path_24" data-name="Path 24" d="M18,4.5V51.275" transform="translate(15.851)" fill="none" stroke="#007bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+    </g>
+  </g>
+</svg>

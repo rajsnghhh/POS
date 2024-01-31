@@ -1,0 +1,147 @@
+.mat-card-header-text {
+  margin: 0 0 !important;
+}
+
+.list-inline-item span {
+  display: block;
+  position: relative;
+}
+
+.ul-block {
+  display: inline;
+}
+
+.pos {
+  padding: 10px;
+}
+
+.content-area {
+  margin-top: 0px !important;
+}
+
+#pos #leftdiv {
+  width: 100%;
+  padding: 10px 10px 5px;
+  background: #f5f5f5;
+  margin: 0;
+}
+
+/////////////////////////////////////////////////
+.card-text {
+  font-size: 10px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// .zoomin {
+//   zoom: 0.7;
+// }
+
+.table-responsive {
+  height: calc(100vh - 199px) !important;
+}
+
+.leftbar {
+  margin-right: -20px;
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.styled-checkbox {
+  display: none;
+}
+
+.styled-label {
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.styled-label:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  border: 2px solid #3498db;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.styled-checkbox:checked+.styled-label:before {
+  background-color: #3498db;
+  border-color: #3498db;
+}
+
+.styled-label:after {
+  content: '\2713';
+  /* Unicode character for a checkmark */
+  position: absolute;
+  left: 6px;
+  top: -1px;
+  font-size: 16px;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.styled-checkbox:checked+.styled-label:after {
+  opacity: 1;
+  margin-bottom: 4px;
+}
+
+::ng-deep {
+  div:where(.swal2-container) h2:where(.swal2-title) {
+    font-size: 1.500em;
+  }
+}
+
+.paymentType{
+  width: 50% !important;
+  font-size: 12px !important;
+  font-weight: 600;
+}
+.paymentTypeHeading{
+  font-weight: 600;
+  margin: 14px;
+}
+
+.table td{
+  padding:0;
+}
+
+
+.suggestionbox {
+  min-height: auto;
+  max-height: 250px;
+  overflow-y: scroll;
+}
+
+::ng-deep {
+  .mat-select-panel {
+    overflow: none !important;
+    max-height: max-content !important;
+  }
+
+  .mat-option-text {
+    font-size: 12px !important;
+    text-transform: uppercase !important;
+    font-weight: 400 !important;
+  }
+
+  .mat-option {
+    line-height: normal !important;
+    height: auto !important;
+    padding: 6px 13px !important;
+  }
+}

@@ -1,0 +1,131 @@
+<div class="page-header-main">
+  <div class="row align-items-center justify-content-between">
+    <div class="col-md-auto col-sm-auto col">
+      <div class="content-header">
+        <h1>Pending Price Report </h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="loading-shade" *ngIf="dataSource.loading$ | async">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="row">
+  <div class="col-sm-12 mb-3">
+    <form [formGroup]="searchForm">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="fromDate">{{'FROM_DATE' | translate}} </label>
+            <input class="form-control" id="fromDate" [max]="currentDate" formControlName="fromDate"
+              [owlDateTimeTrigger]="fromDate" [owlDateTime]="fromDate" placeholder="{{'FROM_DATE' | translate}}">
+            <owl-date-time [pickerType]="'calendar'" #fromDate></owl-date-time>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="toDate">{{'TO_DATE' | translate}} </label>
+            <input class="form-control" id="toDate" [max]="currentDate" formControlName="toDate"
+              [owlDateTimeTrigger]="toDate" [owlDateTime]="toDate" placeholder="{{'TO_DATE' | translate}}">
+            <owl-date-time [pickerType]="'calendar'" #toDate></owl-date-time>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="supplier">Supplier</label>
+            <mat-select formControlName="supplierId" placeholder="Select Supplier"
+              class="form-control">
+              <input class="form-control w-100" formControlName="filterSupplierValue" focused="'true'" type="text"
+                autocomplete="off" placeholder="Search Supplier">
+              <mat-divider></mat-divider>
+              <mat-option *ngFor="let a of suppliers" [value]="a.id">
+                {{a.supplierName}}
+              </mat-option>
+              <mat-option [value]="" *ngIf="suppliers?.length==0">
+                No Records
+              </mat-option>
+            </mat-select>
+          </div>
+        </div>
+        <div class="col-md-6 report-tool-bar">
+          <button type="submit" (click)="onSearch()" class="btn btn-primary btn-sm m-right-10"><i
+              class="fas fa-search"></i> {{'SEARCH' |
+            translate}}
+          </button>
+          <button type="submit" (click)="onClear()" class="btn btn-danger btn-sm m-right-10"><i
+              class="fas fa-eraser"></i>
+            {{'CLEAR' |
+            translate}}
+          </button>
+          <button type="submit" (click)="onDownloadReport()" class="btn btn-warning btn-sm m-right-10"><i
+              class="fas fa-download"></i> {{'DOWNLOAD_REPORT' | translate}}
+          </button>
+          <button type="submit" (click)="onDownloadReportPdf()" class="btn btn-warning btn-sm m-right-10"><i
+              class="fas fa-download"></i> Download PDF
+          </button>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div *ngIf="searchForm.errors">
+            <div class="text-danger" *ngIf="searchForm.errors?.dateRange">
+              {{'DATE_RANGE_VALIDATION_MSG' | translate}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="table-responsive">
+      <table [dir]="langDir" mat-table [dataSource]="dataSource" matSort matSortActive="supplierName"
+        class="table table-bordered table-hover">
+
+        <ng-container matColumnDef="supplierName">
+          <th class="table-column-250" mat-header-cell *matHeaderCellDef>Supplier Name </th>
+          <td class="table-column-250" mat-cell *matCellDef="let element">{{element.supplierName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalAmount">
+          <th class="table-column-200" mat-header-cell *matHeaderCellDef>Total Amount</th>
+          <td class="table-column-200" mat-cell *matCellDef="let element"> {{element.totalAmount | customCurrency}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="paidAmount">
+          <th class="table-column-200" mat-header-cell *matHeaderCellDef>Total Paid Amount </th>
+          <td class="table-column-200" mat-cell *matCellDef="let element"> {{element.totalPaidAmount | customCurrency}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="pendingAmount">
+          <th class="table-column-150" mat-header-cell *matHeaderCellDef>Pending Amount</th>
+          <td class="table-column-150" mat-cell *matCellDef="let element"> {{element.pandingAmount | customCurrency }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="footer">
+          <td mat-footer-cell colspan="10" *matFooterCellDef>
+            <!-- <mat-paginator [length]="purchaseOrderResource.totalCount" [pageSize]="purchaseOrderResource.pageSize"
+                [pageSizeOptions]="[10, 20, 30]">
+              </mat-paginator> -->
+          </td>
+        </ng-container>
+
+        <tr *matNoDataRow>
+          <td colspan="9">
+            <span class="p-4 mt-4">
+              <b> {{'NO_DATA_FOUND' | translate}}</b>
+            </span>
+          </td>
+        </tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <tr mat-footer-row *matFooterRowDef="footerToDisplayed;sticky: true"></tr>
+      </table>
+    </div>
+  </div>
+</div>
